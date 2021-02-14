@@ -3,10 +3,13 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
+assert System.properties["java.specification.version"] == "1.8" || "11" || "12" || "13" || "14"
 
 group = 'io.gonzo'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+apply from: 'gradle/utils.gradle'
 
 configurations {
 	compileOnly {
