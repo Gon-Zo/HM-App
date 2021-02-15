@@ -10,6 +10,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 apply from: 'gradle/utils.gradle'
+apply plugin: 'base'
 
 configurations {
 	compileOnly {
@@ -28,6 +29,11 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
+
+//clean {
+//	delete "${rootDir}/api-library/auto-generated-classes/"
+//	println "${rootDir}/api-library/auto-generated-classes/"
+//}
 
 test {
 	useJUnitPlatform()
