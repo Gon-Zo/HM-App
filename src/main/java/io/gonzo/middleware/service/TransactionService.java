@@ -23,7 +23,9 @@ public class TransactionService {
                 String url = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?ServiceKey=0pAYHFBPkd%2BFYQMVlBZnPxCWsbgGCspccauAOqAHVZhVpLec3iEGOFMTNTLWE%2F%2BXny%2B1dEzLcZhAwqvLxJEYFA%3D%3D&pageNo=" + page + "&numOfRows=10&LAWD_CD=11110&DEAL_YMD=201512";
 
                 DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+
                 DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
+
                 Document doc = dBuilder.parse(url);
 
                 doc.getDocumentElement().normalize();
