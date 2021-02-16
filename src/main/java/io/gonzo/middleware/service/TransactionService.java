@@ -1,78 +1,74 @@
 package io.gonzo.middleware.service;
 
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 @Service
 public class TransactionService {
 
     public void getByTransaction() {
 
+        int page = 1;
+
         try {
 
-            StringBuilder stringBuffer = new StringBuilder();
+            while (true) {
 
-            String key = "0pAYHFBPkd%2BFYQMVlBZnPxCWsbgGCspccauAOqAHVZhVpLec3iEGOFMTNTLWE%2F%2BXny%2B1dEzLcZhAwqvLxJEYFA%3D%3D";
+                String url = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?ServiceKey=0pAYHFBPkd%2BFYQMVlBZnPxCWsbgGCspccauAOqAHVZhVpLec3iEGOFMTNTLWE%2F%2BXny%2B1dEzLcZhAwqvLxJEYFA%3D%3D&pageNo=" + page + "&numOfRows=10&LAWD_CD=11110&DEAL_YMD=201512";
 
-            StringBuilder urlBuilder = new StringBuilder("http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev"); /*URL*/
+                DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+                DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
+                Document doc = dBuilder.parse(url);
 
-            urlBuilder.append("?" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + key); /*Service Key*/
+                doc.getDocumentElement().normalize();
 
-            urlBuilder.append("&" + URLEncoder.encode("ServiceKey", "UTF-8") + "=" + URLEncoder.encode("-", "UTF-8")); /*공공데이터포털에서 받은 인증키*/
+                System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 
-            urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+                NodeList nList = doc.getElementsByTagName("item");
 
-            urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+                for (int temp = 0; temp < nList.getLength(); temp++) {
 
-            urlBuilder.append("&" + URLEncoder.encode("LAWD_CD", "UTF-8") + "=" + URLEncoder.encode("11110", "UTF-8")); /*지역코드*/
+                    Node nNode = nList.item(temp);
 
-            urlBuilder.append("&" + URLEncoder.encode("DEAL_YMD", "UTF-8") + "=" + URLEncoder.encode("201512", "UTF-8")); /*계약월*/
+                    if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
-            URL url = new URL(urlBuilder.toString());
+                        Element eElement = (Element) nNode;
+                        System.out.println("######################");
+                        System.out.println("거래금액  : " + getTagValue("거래금액", eElement));
+                        System.out.println("법정동지번코드  : " + getTagValue("아파트", eElement));
 
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    }
 
-            conn.setRequestMethod("GET");
+                }
 
-            conn.setRequestProperty("Content-type", "application/json");
+                page += 1;
 
-            System.out.println("Response code: " + conn.getResponseCode());
+                System.out.println("page number : " + page);
 
-            BufferedReader rd;
+                if (page > 12) {
+                    break;
+                }
 
-            if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            } else {
-                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
             }
-
-            StringBuilder sb = new StringBuilder();
-
-            String line;
-
-            while ((line = rd.readLine()) != null) {
-                sb.append(line);
-            }
-
-            rd.close();
-
-            conn.disconnect();
-
-            System.out.println(sb.toString());
-
-            String result = sb.toString();
-
-            System.out.println(result);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private String getTagValue(String tag, Element eElement) {
+        NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
+        Node nValue = (Node) nlList.item(0);
+        if (nValue == null)
+            return null;
+        return nValue.getNodeValue();
     }
 
 }
