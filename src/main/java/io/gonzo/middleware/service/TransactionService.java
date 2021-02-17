@@ -1,5 +1,6 @@
 package io.gonzo.middleware.service;
 
+import io.gonzo.middleware.web.dto.TransactionDTO;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -8,11 +9,15 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class TransactionService {
 
-    public void getByTransaction() {
+    public List<TransactionDTO> getByTransaction() {
+
+        List<TransactionDTO> result = new ArrayList<>();
 
         int page = 1;
 
@@ -41,9 +46,13 @@ public class TransactionService {
                     if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                         Element eElement = (Element) nNode;
-                        System.out.println("######################");
-                        System.out.println("거래금액  : " + getTagValue("거래금액", eElement));
-                        System.out.println("법정동지번코드  : " + getTagValue("아파트", eElement));
+
+                        result.add(
+                                TransactionDTO.builder()
+                                        .amount(getTagValue("거래금액", eElement).trim())
+                                        .apartment(getTagValue("아파트", eElement))
+                                        .build()
+                        );
 
                     }
 
@@ -62,6 +71,8 @@ public class TransactionService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return result;
 
     }
 
