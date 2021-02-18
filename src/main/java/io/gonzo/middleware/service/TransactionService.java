@@ -1,6 +1,7 @@
 package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.TransactionDTO;
+import io.gonzo.middleware.web.dto.TransactionStoreDTO;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,27 +16,45 @@ import java.util.List;
 @Service
 public class TransactionService {
 
-    public List<TransactionDTO> getByTransaction() {
+    public List<TransactionDTO> getByTransaction(TransactionStoreDTO dto) {
 
         List<TransactionDTO> result = new ArrayList<>();
 
+        String key = "0pAYHFBPkd%2BFYQMVlBZnPxCWsbgGCspccauAOqAHVZhVpLec3iEGOFMTNTLWE%2F%2BXny%2B1dEzLcZhAwqvLxJEYFA%3D%3D";
+
         int page = 1;
+
+        int totalCount = 0;
 
         try {
 
             while (true) {
 
-                String url = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev?ServiceKey=0pAYHFBPkd%2BFYQMVlBZnPxCWsbgGCspccauAOqAHVZhVpLec3iEGOFMTNTLWE%2F%2BXny%2B1dEzLcZhAwqvLxJEYFA%3D%3D&pageNo=" + page + "&numOfRows=10&LAWD_CD=11110&DEAL_YMD=201512";
+                StringBuffer stringBuffer = new StringBuffer();
+
+                stringBuffer.append("http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev")
+                        .append("?ServiceKey=")
+                        .append(key)
+                        .append("&pageNo=")
+                        .append(page)
+                        .append("&numOfRows=")
+                        .append(dto.getPageNum())
+                        .append("&LAWD_CD=")
+                        .append(dto.getLocalCode())
+                        .append("&DEAL_YMD=")
+                        .append(dto.getPickDate());
 
                 DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 
                 DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
 
-                Document doc = dBuilder.parse(url);
+                Document doc = dBuilder.parse(stringBuffer.toString());
 
                 doc.getDocumentElement().normalize();
 
-                System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+                if (page == 1) {
+                    totalCount = getBreakCount(doc, dto.getPageNum());
+                }
 
                 NodeList nList = doc.getElementsByTagName("item");
 
@@ -49,8 +68,9 @@ public class TransactionService {
 
                         result.add(
                                 TransactionDTO.builder()
-                                        .amount(getTagValue("거래금액", eElement).trim())
+                                        .amount(getTagValue("거래금액", eElement))
                                         .apartment(getTagValue("아파트", eElement))
+                                        .courtBuilding(getTagValue("법정동", eElement))
                                         .build()
                         );
 
@@ -60,9 +80,7 @@ public class TransactionService {
 
                 page += 1;
 
-                System.out.println("page number : " + page);
-
-                if (page > 12) {
+                if (page > totalCount) {
                     break;
                 }
 
@@ -82,6 +100,18 @@ public class TransactionService {
         if (nValue == null)
             return null;
         return nValue.getNodeValue();
+    }
+
+    private Integer getTotalCount(Document doc) {
+        Node node = doc.getElementsByTagName("totalCount").item(0).getFirstChild();
+        String nodeValue = node.getNodeValue();
+        return Integer.valueOf(nodeValue);
+    }
+
+    private int getBreakCount(Document doc , int pageNum) {
+        Integer num1 = getTotalCount(doc);
+        int num2 = pageNum;
+        return (int) Math.ceil((double) num1 / num2);
     }
 
 }
