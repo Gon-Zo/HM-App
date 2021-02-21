@@ -17,6 +17,8 @@ public class TransactionStoreDTO {
 
     private String localCode;
 
+    private String courtBuilding;
+
     public String getPickDate() {
         return pickDate.replace("-", "");
     }

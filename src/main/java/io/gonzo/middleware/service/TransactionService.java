@@ -2,6 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -12,11 +13,25 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TransactionService {
 
     public List<TransactionDTO> getByTransaction(TransactionStoreDTO dto) {
+
+        List<TransactionDTO> result = fetchByPublicApiToTransaction(dto);
+
+        if(StringUtils.isNotEmpty(dto.getCourtBuilding())){
+            return result.stream()
+                    .filter(data -> data.getCourtBuilding().equals(dto.getCourtBuilding()))
+                    .collect(Collectors.toList());
+        }
+
+        return result;
+    }
+
+    private List<TransactionDTO> fetchByPublicApiToTransaction(TransactionStoreDTO dto){
 
         List<TransactionDTO> result = new ArrayList<>();
 
@@ -91,7 +106,6 @@ public class TransactionService {
         }
 
         return result;
-
     }
 
     private String getTagValue(String tag, Element eElement) {

@@ -22,6 +22,9 @@ public class TransactionDTO {
     // 법정동
     private String courtBuilding;
 
+    // date
+    private String pickDate;
+
     public BigDecimal getAmount() {
         return BigDecimal.valueOf(Long.valueOf(this.amount.trim().replace(",", "")));
     }
