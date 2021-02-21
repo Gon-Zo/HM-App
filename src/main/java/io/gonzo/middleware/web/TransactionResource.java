@@ -12,14 +12,19 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/middleware")
+@RequestMapping("/api/middleware/transaction")
 public class TransactionResource {
 
     private final TransactionService service;
 
-    @GetMapping("/transaction")
+    @GetMapping("")
     public List<TransactionDTO> showByTransaction(TransactionStoreDTO dto) {
         return service.getByTransaction(dto);
+    }
+
+    @GetMapping("/trend")
+    public List<TransactionDTO> showByTrend(TransactionStoreDTO dto) {
+        return service.getByTransactionTrend(dto);
     }
 
 }
