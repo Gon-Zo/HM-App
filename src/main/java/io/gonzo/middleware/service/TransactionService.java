@@ -18,6 +18,26 @@ import java.util.stream.Collectors;
 @Service
 public class TransactionService {
 
+    public List<TransactionDTO> getByTransactionTrend(TransactionStoreDTO dto){
+
+        List<TransactionDTO> result = new ArrayList<>();
+
+        dto.getPickDateBy12().forEach(date -> {
+            dto.setPickDate(date);
+            List<TransactionDTO> tempList = fetchByPublicApiToTransaction(dto);
+            result.addAll(tempList);
+        });
+
+        if(StringUtils.isNotEmpty(dto.getCourtBuilding())){
+            return result.stream()
+                    .filter(data -> data.getCourtBuilding().equals(dto.getCourtBuilding()))
+                    .collect(Collectors.toList());
+        }
+
+        return result;
+
+    }
+
     public List<TransactionDTO> getByTransaction(TransactionStoreDTO dto) {
 
         List<TransactionDTO> result = fetchByPublicApiToTransaction(dto);
@@ -86,6 +106,7 @@ public class TransactionService {
                                         .amount(getTagValue("거래금액", eElement))
                                         .apartment(getTagValue("아파트", eElement))
                                         .courtBuilding(getTagValue("법정동", eElement))
+                                        .pickDate(dto.getPickDate())
                                         .build()
                         );
 
