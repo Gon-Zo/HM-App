@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 @Getter
 @Builder
 @NoArgsConstructor
@@ -31,6 +33,20 @@ public class TransactionDTO {
 
     public String getCourtBuilding() {
         return courtBuilding.trim();
+    }
+
+    public boolean isUsed(String courtBuilding, String apartment) {
+        boolean result = false;
+
+        if(isNotEmpty(courtBuilding)){
+           result = this.getCourtBuilding().equals(courtBuilding);
+        }
+
+        if(isNotEmpty(apartment)){
+           result = this.apartment.equals(apartment);
+        }
+
+        return result;
     }
 
 }
