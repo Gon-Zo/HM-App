@@ -2,7 +2,6 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
