@@ -116,14 +116,11 @@ public class TransactionService {
     }
 
     private List<TransactionDTO> getByResultList(TransactionStoreDTO dto, List<TransactionDTO> result) {
-
         List<TransactionDTO> temp = new ArrayList<>(result);
-
         if (isNotEmpty(dto.getCourtBuilding()) || isNotEmpty(dto.getApartment())) {
             temp = result.stream().filter(data -> data.isUsed(dto.getCourtBuilding(), dto.getApartment()))
                     .collect(Collectors.toList());
         }
-
         return temp;
     }
 
