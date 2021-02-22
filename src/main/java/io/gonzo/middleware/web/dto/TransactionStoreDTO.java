@@ -26,6 +26,8 @@ public class TransactionStoreDTO {
 
     private String courtBuilding;
 
+    private String apartment;
+
     public String getPickDate() {
         return pickDate.replace("-", "");
     }

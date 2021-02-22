@@ -15,10 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+
 @Service
 public class TransactionService {
 
-    public List<TransactionDTO> getByTransactionTrend(TransactionStoreDTO dto){
+    public List<TransactionDTO> getByTransactionTrend(TransactionStoreDTO dto) {
 
         List<TransactionDTO> result = new ArrayList<>();
 
@@ -28,27 +30,15 @@ public class TransactionService {
             result.addAll(tempList);
         });
 
-        if(StringUtils.isNotEmpty(dto.getCourtBuilding())){
-            return result.stream()
-                    .filter(data -> data.getCourtBuilding().equals(dto.getCourtBuilding()))
-                    .collect(Collectors.toList());
-        }
-
-        return result;
-
+        return getByResultList(dto, result);
     }
 
     public List<TransactionDTO> getByTransaction(TransactionStoreDTO dto) {
 
         List<TransactionDTO> result = fetchByPublicApiToTransaction(dto);
 
-        if(StringUtils.isNotEmpty(dto.getCourtBuilding())){
-            return result.stream()
-                    .filter(data -> data.getCourtBuilding().equals(dto.getCourtBuilding()))
-                    .collect(Collectors.toList());
-        }
+        return getByResultList(dto , result);
 
-        return result;
     }
 
     private List<TransactionDTO> fetchByPublicApiToTransaction(TransactionStoreDTO dto){
@@ -127,6 +117,18 @@ public class TransactionService {
         }
 
         return result;
+    }
+
+    private List<TransactionDTO> getByResultList(TransactionStoreDTO dto, List<TransactionDTO> result) {
+
+        List<TransactionDTO> temp = new ArrayList<>(result);
+
+        if (isNotEmpty(dto.getCourtBuilding()) || isNotEmpty(dto.getApartment())) {
+            temp = result.stream().filter(data -> data.isUsed(dto.getCourtBuilding(), dto.getApartment()))
+                    .collect(Collectors.toList());
+        }
+
+        return temp;
     }
 
     private String getTagValue(String tag, Element eElement) {
