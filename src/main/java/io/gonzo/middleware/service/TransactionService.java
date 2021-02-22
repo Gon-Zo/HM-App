@@ -15,29 +15,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 
 @Service
 public class TransactionService {
 
     public List<TransactionDTO> getByTransactionTrend(TransactionStoreDTO dto) {
-
         List<TransactionDTO> result = new ArrayList<>();
-
         dto.getPickDateBy12().forEach(date -> {
             dto.setPickDate(date);
             List<TransactionDTO> tempList = fetchByPublicApiToTransaction(dto);
             result.addAll(tempList);
         });
-
         return getByResultList(dto, result);
     }
 
     public List<TransactionDTO> getByTransaction(TransactionStoreDTO dto) {
-
         List<TransactionDTO> result = fetchByPublicApiToTransaction(dto);
-
         return getByResultList(dto , result);
-
     }
 
     private List<TransactionDTO> fetchByPublicApiToTransaction(TransactionStoreDTO dto){
@@ -128,14 +123,6 @@ public class TransactionService {
         }
 
         return temp;
-    }
-
-    private String getTagValue(String tag, Element eElement) {
-        NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-        Node nValue = (Node) nlList.item(0);
-        if (nValue == null)
-            return null;
-        return nValue.getNodeValue();
     }
 
     private Integer getTotalCount(Document doc) {
