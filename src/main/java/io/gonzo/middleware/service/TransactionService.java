@@ -2,6 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,6 +20,9 @@ import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 
 @Service
 public class TransactionService {
+
+    @Value("${app.key}")
+    private String key;
 
     public List<TransactionDTO> getByTransactionTrend(TransactionStoreDTO dto) {
         List<TransactionDTO> result = new ArrayList<>();
@@ -38,8 +42,6 @@ public class TransactionService {
     private List<TransactionDTO> fetchByPublicApiToTransaction(TransactionStoreDTO dto){
 
         List<TransactionDTO> result = new ArrayList<>();
-
-        String key = "0pAYHFBPkd%2BFYQMVlBZnPxCWsbgGCspccauAOqAHVZhVpLec3iEGOFMTNTLWE%2F%2BXny%2B1dEzLcZhAwqvLxJEYFA%3D%3D";
 
         int page = 1;
 
