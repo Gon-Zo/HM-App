@@ -22,7 +22,14 @@ public class CharterMonthlyDTO {
     // 월세금액
     private String monthlyRent;
 
+    // 법정동
+    private String courtBuilding;
+
     private String pickDate;
+
+    public String getCourtBuilding() {
+        return courtBuilding.trim();
+    }
 
     public BigDecimal getAmount() {
         return BigDecimal.valueOf(Long.valueOf(this.amount.trim().replace(",", "")));

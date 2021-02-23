@@ -63,6 +63,7 @@ public class CharterMonthlyService {
                                     .amount(getTagValue("보증금액", eElement))
                                     .apartment(getTagValue("아파트", eElement))
                                     .monthlyRent(getTagValue("월세금액", eElement))
+                                    .courtBuilding(getTagValue("법정동", eElement))
                                     .pickDate(dto.getPickDate())
                                     .build()
                     );
