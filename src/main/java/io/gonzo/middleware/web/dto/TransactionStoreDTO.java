@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static io.gonzo.middleware.utils.DtoUtils.changeToByPicker;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,7 +31,7 @@ public class TransactionStoreDTO {
     private String apartment;
 
     public String getPickDate() {
-        return pickDate.replace("-", "");
+        return changeToByPicker(this.pickDate);
     }
 
     public List<String> getPickDateBy12() {
@@ -44,6 +46,7 @@ public class TransactionStoreDTO {
                 .limit(numOfDaysBetween)
                 .mapToObj(i -> convertByLocalDateToString(startDate.plusMonths(i)))
                 .collect(Collectors.toList());
+
     }
 
     private String convertByLocalDateToString(LocalDate date){
