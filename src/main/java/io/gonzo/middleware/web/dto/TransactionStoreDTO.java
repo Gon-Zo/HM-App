@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static io.gonzo.middleware.utils.DtoUtils.changeToByPicker;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 
 @Getter
 @Setter
@@ -53,6 +54,15 @@ public class TransactionStoreDTO {
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyyMM");
         String formattedString = date.format(pattern);
         return formattedString;
+    }
+
+    public Integer getPageNum() {
+
+        if(isEmpty(this.pageNum)){
+            return 100;
+        }
+
+        return pageNum;
     }
 
 }
