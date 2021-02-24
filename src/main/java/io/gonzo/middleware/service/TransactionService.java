@@ -39,7 +39,7 @@ public class TransactionService {
         return getByResultList(dto , result);
     }
 
-    private List<TransactionDTO> fetchByPublicApiToTransaction(TransactionStoreDTO dto){
+    private List<TransactionDTO> fetchByPublicApiToTransaction(TransactionStoreDTO dto) {
 
         List<TransactionDTO> result = new ArrayList<>();
 
@@ -53,7 +53,9 @@ public class TransactionService {
 
                 StringBuffer stringBuffer = new StringBuffer();
 
-                stringBuffer.append("http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev")
+                String uri = "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev";
+
+                stringBuffer.append(uri)
                         .append("?ServiceKey=")
                         .append(key)
                         .append("&pageNo=")
