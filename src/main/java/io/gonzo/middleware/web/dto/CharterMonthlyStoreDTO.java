@@ -17,6 +17,8 @@ public class CharterMonthlyStoreDTO {
 
     private String localCode;
 
+    private String courtBuilding;
+
     public String getPickDate() {
         return changeToByPicker(this.pickDate);
     }
