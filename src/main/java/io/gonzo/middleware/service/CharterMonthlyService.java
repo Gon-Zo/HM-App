@@ -13,8 +13,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
+import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
 public class CharterMonthlyService {
@@ -23,6 +25,16 @@ public class CharterMonthlyService {
     private String key;
 
     public List<CharterMonthlyDTO> getByCharterAndMonthly(CharterMonthlyStoreDTO dto){
+        List<CharterMonthlyDTO> result = getUriByCharterAndMonthly(dto);
+        if(isNotEmpty(dto.getCourtBuilding())){
+            return result.stream()
+                    .filter(data -> data.getCourtBuilding().equals(dto.getCourtBuilding()))
+                    .collect(Collectors.toList());
+        }
+        return result;
+    }
+
+    private List<CharterMonthlyDTO> getUriByCharterAndMonthly(CharterMonthlyStoreDTO dto){
 
         List<CharterMonthlyDTO> result = new ArrayList<>();
 
