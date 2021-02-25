@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
+import static io.gonzo.middleware.utils.XmlUtils.resultCodeByException;
 
 @Service
 public class AllianceAmountService {
@@ -52,6 +53,8 @@ public class AllianceAmountService {
             Document doc = dBuilder.parse(stringBuffer.toString());
 
             doc.getDocumentElement().normalize();
+
+            resultCodeByException(doc);
 
             NodeList nList = doc.getElementsByTagName("item");
 
