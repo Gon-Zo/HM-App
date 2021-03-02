@@ -14,12 +14,13 @@ public class RegionService {
 
     private String COMMA_DELIMITER = ",";
 
-    public RegionDTO getByRegionCode(String regionName) {
+    public String getByRegionCode(String regionName) {
         List<RegionDTO> regions = readByRegionCode();
-        return regions.stream()
+        RegionDTO searchRegion = regions.stream()
                 .filter(region -> region.getRegionName().equals(regionName))
                 .findAny()
-                .orElse(RegionDTO.builder().build());
+                .orElse(RegionDTO.builder().regionCode("").regionName("").build());
+        return searchRegion.getRegionCode();
     }
 
     private List<RegionDTO> readByRegionCode() {

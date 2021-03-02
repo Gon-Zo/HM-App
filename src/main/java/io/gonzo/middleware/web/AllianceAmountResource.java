@@ -23,8 +23,7 @@ public class AllianceAmountResource {
 
     @GetMapping("")
     public List<AllianceAmountDTO> showByAllianceAmount(AllianceAmountStoreDTO dto) {
-        RegionDTO region = regionService.getByRegionCode(dto.getRegionName());
-        dto.setLocalCode(region.getRegionCode());
+        dto.setLocalCode(regionService.getByRegionCode(dto.getRegionName()));
         return service.getByAllianceAmountList(dto);
     }
 
