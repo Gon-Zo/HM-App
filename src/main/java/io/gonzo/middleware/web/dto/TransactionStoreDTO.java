@@ -27,6 +27,8 @@ public class TransactionStoreDTO {
 
     private String apartment;
 
+    private String regionName;
+
     public String getPickDate() {
         return changeToByPicker(this.pickDate);
     }
