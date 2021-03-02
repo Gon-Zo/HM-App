@@ -1,5 +1,6 @@
 package io.gonzo.middleware.web;
 
+import io.gonzo.middleware.service.RegionService;
 import io.gonzo.middleware.service.TransactionService;
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
@@ -17,13 +18,17 @@ public class TransactionResource {
 
     private final TransactionService service;
 
+    private final RegionService regionService;
+
     @GetMapping("")
     public List<TransactionDTO> showByTransaction(TransactionStoreDTO dto) {
+        dto.setLocalCode(regionService.getByRegionCode(dto.getRegionName()));
         return service.getByTransaction(dto);
     }
 
     @GetMapping("/trend")
     public List<TransactionDTO> showByTrend(TransactionStoreDTO dto) {
+        dto.setLocalCode(regionService.getByRegionCode(dto.getRegionName()));
         return service.getByTransactionTrend(dto);
     }
 
