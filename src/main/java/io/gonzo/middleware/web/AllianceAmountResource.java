@@ -4,7 +4,6 @@ import io.gonzo.middleware.service.AllianceAmountService;
 import io.gonzo.middleware.service.RegionService;
 import io.gonzo.middleware.web.dto.AllianceAmountDTO;
 import io.gonzo.middleware.web.dto.AllianceAmountStoreDTO;
-import io.gonzo.middleware.web.dto.RegionDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
