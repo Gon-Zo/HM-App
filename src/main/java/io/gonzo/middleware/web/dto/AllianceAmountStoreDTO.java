@@ -15,6 +15,8 @@ public class AllianceAmountStoreDTO {
 
     private String pickDate;
 
+    private String regionName;
+
     public String getPickDate() {
         return changeToByPicker(pickDate);
     }
