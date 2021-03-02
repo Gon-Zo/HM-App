@@ -1,8 +1,10 @@
 package io.gonzo.middleware.web;
 
 import io.gonzo.middleware.service.AllianceAmountService;
+import io.gonzo.middleware.service.RegionService;
 import io.gonzo.middleware.web.dto.AllianceAmountDTO;
 import io.gonzo.middleware.web.dto.AllianceAmountStoreDTO;
+import io.gonzo.middleware.web.dto.RegionDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +19,12 @@ public class AllianceAmountResource {
 
     private final AllianceAmountService service;
 
+    private final RegionService regionService;
+
     @GetMapping("")
     public List<AllianceAmountDTO> showByAllianceAmount(AllianceAmountStoreDTO dto) {
+        RegionDTO region = regionService.getByRegionCode(dto.getRegionName());
+        dto.setLocalCode(region.getRegionCode());
         return service.getByAllianceAmountList(dto);
     }
 
