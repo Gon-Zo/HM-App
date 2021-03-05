@@ -46,6 +46,8 @@ public class AllianceAmountService {
                     .append("&DEAL_YMD=")
                     .append(dto.getPickDate());
 
+
+
             DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 
             DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
