@@ -2,6 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.YearTransactionsDTO;
 import io.gonzo.middleware.web.dto.YearTransactionsStoreDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -17,10 +18,11 @@ import java.util.List;
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 
 @Service
+@RequiredArgsConstructor
 public class YearTransactionsService {
 
     @Value("${app.key}")
-    private String key;
+    private final String key;
 
     public List<YearTransactionsDTO> getByYearTransactions(YearTransactionsStoreDTO dto) {
 

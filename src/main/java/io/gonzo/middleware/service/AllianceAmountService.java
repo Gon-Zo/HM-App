@@ -2,6 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.AllianceAmountDTO;
 import io.gonzo.middleware.web.dto.AllianceAmountStoreDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -19,10 +20,11 @@ import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 import static io.gonzo.middleware.utils.XmlUtils.resultCodeByException;
 
 @Service
+@RequiredArgsConstructor
 public class AllianceAmountService {
 
     @Value("${app.key}")
-    private String key;
+    private final String key;
 
     public List<AllianceAmountDTO> getByAllianceAmountList(AllianceAmountStoreDTO dto) {
         return getUriByAllianceAmount(dto);

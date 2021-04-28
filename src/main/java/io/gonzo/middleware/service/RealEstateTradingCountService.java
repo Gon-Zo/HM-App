@@ -3,6 +3,7 @@ package io.gonzo.middleware.service;
 import io.gonzo.middleware.web.dto.AllianceAmountDTO;
 import io.gonzo.middleware.web.dto.RealEstateTradingCountDTO;
 import io.gonzo.middleware.web.dto.RealEstateTradingCountStoreDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -20,10 +21,11 @@ import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 import static io.gonzo.middleware.utils.XmlUtils.resultCodeByException;
 
 @Service
+@RequiredArgsConstructor
 public class RealEstateTradingCountService {
 
     @Value("${app.key}")
-    private String key;
+    private final String key;
 
     public List<RealEstateTradingCountDTO> getByRealEstateTradingCount(RealEstateTradingCountStoreDTO dto) {
 
