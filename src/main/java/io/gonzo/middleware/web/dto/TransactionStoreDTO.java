@@ -1,9 +1,6 @@
 package io.gonzo.middleware.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -14,7 +11,6 @@ import static io.gonzo.middleware.utils.DtoUtils.changeByPicker12;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class TransactionStoreDTO {
 
     private Integer pageNum;
@@ -44,4 +40,13 @@ public class TransactionStoreDTO {
         return pageNum;
     }
 
+    @Builder
+    public TransactionStoreDTO(Integer pageNum, String pickDate, String localCode, String courtBuilding, String apartment, String regionName) {
+        this.pageNum = pageNum;
+        this.pickDate = pickDate;
+        this.localCode = localCode;
+        this.courtBuilding = courtBuilding;
+        this.apartment = apartment;
+        this.regionName = regionName;
+    }
 }
