@@ -20,11 +20,10 @@ import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 import static io.gonzo.middleware.utils.XmlUtils.resultCodeByException;
 
 @Service
-@RequiredArgsConstructor
 public class AllianceAmountService {
 
     @Value("${app.key}")
-    private final String key;
+    private String key;
 
     public List<AllianceAmountDTO> getByAllianceAmountList(AllianceAmountStoreDTO dto) {
         return getUriByAllianceAmount(dto);

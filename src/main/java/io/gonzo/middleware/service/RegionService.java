@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
-@RequiredArgsConstructor
 public class RegionService {
 
     public String getByRegionCode(String regionName) {

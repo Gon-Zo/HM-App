@@ -20,11 +20,10 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 
 @Service
-@RequiredArgsConstructor
 public class TransactionService {
 
     @Value("${app.key}")
-    private final String key;
+    private String key;
 
     public List<TransactionDTO> getByTransactionTrend(TransactionStoreDTO dto) {
         List<TransactionDTO> result = new ArrayList<>();
