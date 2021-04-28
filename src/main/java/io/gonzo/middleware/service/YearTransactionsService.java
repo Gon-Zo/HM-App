@@ -18,11 +18,10 @@ import java.util.List;
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 
 @Service
-@RequiredArgsConstructor
 public class YearTransactionsService {
 
     @Value("${app.key}")
-    private final String key;
+    private String key;
 
     public List<YearTransactionsDTO> getByYearTransactions(YearTransactionsStoreDTO dto) {
 

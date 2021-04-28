@@ -20,11 +20,10 @@ import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
-@RequiredArgsConstructor
 public class CharterMonthlyService {
 
     @Value("${app.key}")
-    private final String key;
+    private String key;
 
     public List<CharterMonthlyDTO> getByCharterAndMonthly(CharterMonthlyStoreDTO dto){
         List<CharterMonthlyDTO> result = getUriByCharterAndMonthly(dto);
