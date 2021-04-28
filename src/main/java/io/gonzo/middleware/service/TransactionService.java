@@ -2,7 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 
+@Slf4j
 @Service
 public class TransactionService {
 
@@ -37,7 +38,7 @@ public class TransactionService {
 
     public List<TransactionDTO> getByTransaction(TransactionStoreDTO dto) {
         List<TransactionDTO> result = fetchByPublicApiToTransaction(dto);
-        return getByResultList(dto , result);
+        return getByResultList(dto, result);
     }
 
     private List<TransactionDTO> fetchByPublicApiToTransaction(TransactionStoreDTO dto) {
@@ -68,11 +69,15 @@ public class TransactionService {
                         .append("&DEAL_YMD=")
                         .append(dto.getPickDate());
 
+                String publicUri = stringBuffer.toString();
+
+                log.info(" Public ===> {} <=== ", publicUri);
+
                 DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
 
                 DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
 
-                Document doc = dBuilder.parse(stringBuffer.toString());
+                Document doc = dBuilder.parse(publicUri);
 
                 doc.getDocumentElement().normalize();
 
@@ -133,7 +138,7 @@ public class TransactionService {
         return Integer.valueOf(nodeValue);
     }
 
-    private int getBreakCount(Document doc , int pageNum) {
+    private int getBreakCount(Document doc, int pageNum) {
         Integer num1 = getTotalCount(doc);
         int num2 = pageNum;
         return (int) Math.ceil((double) num1 / num2);
