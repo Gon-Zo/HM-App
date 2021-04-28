@@ -1,6 +1,7 @@
 package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.RegionDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -10,9 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
+@RequiredArgsConstructor
 public class RegionService {
-
-    private String COMMA_DELIMITER = ",";
 
     public String getByRegionCode(String regionName) {
         List<RegionDTO> regions = readByRegionCode();
@@ -28,10 +28,17 @@ public class RegionService {
         List<RegionDTO> regions = new ArrayList<>();
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
+
                 String line = scanner.nextLine();
+
+                String COMMA_DELIMITER = ",";
+
                 String[] lines = line.split(COMMA_DELIMITER);
+
                 String name = lines[0].trim();
+
                 String code = lines[1].trim();
+
                 regions.add(
                         RegionDTO.builder()
                                 .regionName(name)

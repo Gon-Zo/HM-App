@@ -2,6 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.CharterMonthlyDTO;
 import io.gonzo.middleware.web.dto.CharterMonthlyStoreDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -19,10 +20,11 @@ import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 
 @Service
+@RequiredArgsConstructor
 public class CharterMonthlyService {
 
     @Value("${app.key}")
-    private String key;
+    private final String key;
 
     public List<CharterMonthlyDTO> getByCharterAndMonthly(CharterMonthlyStoreDTO dto){
         List<CharterMonthlyDTO> result = getUriByCharterAndMonthly(dto);
