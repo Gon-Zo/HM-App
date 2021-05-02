@@ -4,7 +4,6 @@ import io.gonzo.middleware.service.RegionService;
 import io.gonzo.middleware.service.TransactionService;
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,13 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/middleware/transaction")
 public class TransactionResource {
 
     private final TransactionService service;
 
     private final RegionService regionService;
+
+    public TransactionResource(TransactionService service, RegionService regionService) {
+        this.service = service;
+        this.regionService = regionService;
+    }
 
     @GetMapping("")
     public List<TransactionDTO> showByTransaction(TransactionStoreDTO dto) {
