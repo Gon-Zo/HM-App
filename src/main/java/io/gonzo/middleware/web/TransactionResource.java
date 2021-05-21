@@ -4,6 +4,7 @@ import io.gonzo.middleware.service.RegionService;
 import io.gonzo.middleware.service.TransactionService;
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,15 +25,17 @@ public class TransactionResource {
     }
 
     @GetMapping("")
-    public List<TransactionDTO> showByTransaction(TransactionStoreDTO dto) {
+    public ResponseEntity<List<TransactionDTO>> showByTransaction(TransactionStoreDTO dto) {
         dto.setLocalCode(regionService.getByRegionCode(dto.getRegionName()));
-        return service.getByTransaction(dto);
+        List<TransactionDTO> data = service.getByTransaction(dto);
+        return ResponseEntity.ok().body(data);
     }
 
     @GetMapping("/trend")
-    public List<TransactionDTO> showByTrend(TransactionStoreDTO dto) {
+    public ResponseEntity<List<TransactionDTO>> showByTrend(TransactionStoreDTO dto) {
         dto.setLocalCode(regionService.getByRegionCode(dto.getRegionName()));
-        return service.getByTransactionTrend(dto);
+        List<TransactionDTO> data = service.getByTransactionTrend(dto);
+        return ResponseEntity.ok().body(data);
     }
 
 }
