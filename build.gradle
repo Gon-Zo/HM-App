@@ -30,6 +30,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:1.17"
+
+	// csv reader
+	implementation group: 'com.opencsv', name: 'opencsv', version: '3.7'
 }
 
 //clean {
