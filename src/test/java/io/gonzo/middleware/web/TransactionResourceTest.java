@@ -1,6 +1,5 @@
 package io.gonzo.middleware.web;
 
-import io.gonzo.middleware.service.RegionService;
 import io.gonzo.middleware.service.TransactionService;
 import io.gonzo.middleware.web.dto.TransactionDTO;
 import io.gonzo.middleware.web.dto.TransactionStoreDTO;
