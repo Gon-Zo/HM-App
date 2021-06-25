@@ -6,4 +6,4 @@ COPY build/libs/middleware-0.0.1-SNAPSHOT.jar ./webapp/middleware-0.0.1-SNAPSHOT
 
 ENV JAVA_OPS=""
 
-ENTRYPOINT ["java" , "-jar" , "./webapp/middleware-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java" , "-Djasypt.encryptor.password=middle12345!!","-jar" , "./webapp/middleware-0.0.1-SNAPSHOT.jar"]
