@@ -7,24 +7,17 @@ import lombok.*;
 @NoArgsConstructor
 public class TransactionsDTO {
 
-    private String title;
+    private String regionName;
 
-    private String yearMonth;
+    private String date;
 
-    private String count;
-
-    public TransactionsDTO(String title, String yearMonth, String count) {
-        this.title = title;
-        this.yearMonth = yearMonth;
-        this.count = count;
-    }
+    private Integer count;
 
     @Builder
-    public TransactionsDTO(String regionNm, String rsRow) {
-        String[] arrayOfResRow = rsRow.split(",");
-        this.title = regionNm;
-        this.yearMonth = arrayOfResRow[0];
-        this.count = arrayOfResRow[1];
+    public TransactionsDTO(String regionName, String date, String count) {
+        this.regionName = regionName;
+        this.date = date;
+        this.count = Integer.valueOf(count);
     }
 
 }
