@@ -18,7 +18,14 @@ public class XmlUtils {
     }
 
     public static void resultCodeByException(Document doc) {
+
         String resultCode = doc.getElementsByTagName("resultCode")
+                .item(0)
+                .getChildNodes()
+                .item(0)
+                .getNodeValue();
+
+        String resultMsg = doc.getElementsByTagName("resultMsg")
                 .item(0)
                 .getChildNodes()
                 .item(0)
@@ -26,9 +33,12 @@ public class XmlUtils {
 
         log.info("result code :: >> {}", resultCode);
 
+        log.info("resultMsg :: >> {}", resultMsg);
+
         if (resultCode.equals("99")) {
             throw new NullPointerException();
         }
+        
     }
 
 }
