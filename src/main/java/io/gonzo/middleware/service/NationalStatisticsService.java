@@ -51,7 +51,6 @@ public class NationalStatisticsService {
                                 .endDate(endMonth)
                                 .isYear(dto.isYear())
                                 .region(parents.getCode())
-                                .type(dto.getType())
                                 .build()
                 ))
                 .flatMap(Collection::parallelStream)

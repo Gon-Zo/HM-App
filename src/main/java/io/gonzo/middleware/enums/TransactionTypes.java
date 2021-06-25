@@ -2,8 +2,6 @@ package io.gonzo.middleware.enums;
 
 import lombok.Getter;
 
-import java.util.Arrays;
-
 public enum TransactionTypes {
 
     NORMAL("N");
