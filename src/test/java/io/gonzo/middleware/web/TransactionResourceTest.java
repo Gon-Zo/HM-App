@@ -39,9 +39,6 @@ class TransactionResourceTest {
     @MockBean
     private TransactionService transactionService;
 
-    @MockBean
-    private RegionService regionService;
-
     @Test
     @DisplayName("파트매매 실거래 상세 [월기준]")
     public void showByTransaction() throws Exception {
