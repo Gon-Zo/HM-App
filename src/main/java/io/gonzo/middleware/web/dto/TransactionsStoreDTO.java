@@ -5,14 +5,17 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class TransactionsStoreDTO {
 
-    private String startMonth;
+    private String startDate;
 
-    private String endMonth;
+    private String endDate;
 
     private String region;
+
+    private boolean isYear;
+
+    private String type;
 
 }

@@ -1,10 +1,12 @@
 package io.gonzo.middleware.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+@Slf4j
 public class XmlUtils {
 
     public static String getTagValue(String tag, Element eElement) {
@@ -22,10 +24,11 @@ public class XmlUtils {
                 .item(0)
                 .getNodeValue();
 
+        log.info("result code :: >> {}", resultCode);
+
         if (resultCode.equals("99")) {
             throw new NullPointerException();
         }
-
     }
 
 }

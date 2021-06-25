@@ -4,6 +4,8 @@ import io.gonzo.middleware.web.dto.AreaCodeDTO;
 import io.gonzo.middleware.web.dto.BaseDTO;
 import io.gonzo.middleware.web.dto.TransactionsDTO;
 import io.gonzo.middleware.web.dto.TransactionsStoreDTO;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -15,6 +17,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,29 +25,33 @@ import java.util.stream.Collectors;
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 import static io.gonzo.middleware.utils.XmlUtils.resultCodeByException;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class NationalStatisticsService {
 
     @Value("${app.key}")
     private String key;
 
-    private AreaCodeService areaCodeService;
+    private final AreaCodeService areaCodeService;
 
     // [전국 조회] 부동산 거래 건수 조회
-    public List<TransactionsDTO> getNumberOfTransactionsByAll(BaseDTO dto) {
+    public List<TransactionsDTO> getNumberOfTransactionsByNationwide(BaseDTO dto) {
 
         List<AreaCodeDTO> parentsList = areaCodeService.getAreaCodeToParents();
 
-        String startMonth = dto.getStartMonth();
+        String startMonth = dto.getStartDate();
 
-        String endMonth = dto.getEndMonth();
+        String endMonth = dto.getEndDate();
 
         return parentsList.stream().map(parents ->
                 getNumberOfTransactions(
                         TransactionsStoreDTO.builder()
-                                .startMonth(startMonth)
-                                .endMonth(endMonth)
+                                .startDate(startMonth)
+                                .endDate(endMonth)
+                                .isYear(dto.isYear())
                                 .region(parents.getCode())
+                                .type(dto.getType())
                                 .build()
                 ))
                 .flatMap(Collection::parallelStream)
@@ -53,31 +60,38 @@ public class NationalStatisticsService {
 
     // 부동산 거래 건수 조회
     public List<TransactionsDTO> getNumberOfTransactions(TransactionsStoreDTO dto) {
+
         List<TransactionsDTO> result = new ArrayList<>();
+
+        boolean isYear = dto.isYear();
 
         try {
 
             StringBuffer stringBuffer = new StringBuffer();
 
-            String url = "http://openapi.reb.or.kr/OpenAPI_ToolInstallPackage/service/rest/RealEstateTradingSvc/getRealEstateTradingCount";
+            String url = "http://openapi.reb.or.kr/OpenAPI_ToolInstallPackage/service/rest/RealEstateTradingSvc/";
+
+            url += isYear ? "getRealEstateTradingCountYear" : "getRealEstateTradingCount";
 
             stringBuffer.append(url)
                     .append("?ServiceKey=")
                     .append(key)
-                    .append("&startmonth=")
-                    .append(dto.getStartMonth())
-                    .append("&endmonth=")
-                    .append(dto.getEndMonth())
+                    .append(getByStartDateParam(isYear, dto.getStartDate()))
+                    .append(getByEndDateParam(isYear, dto.getEndDate()))
                     .append("&region=")
                     .append(dto.getRegion())
                     .append("&tradingtype=")
                     .append("01");
 
-            DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+            String publicUrl = stringBuffer.toString();
 
-            DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
+            log.info("public url :: >> [ {} ]", publicUrl);
 
-            Document doc = dBuilder.parse(stringBuffer.toString());
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            Document doc = dBuilder.parse(publicUrl);
 
             doc.getDocumentElement().normalize();
 
@@ -95,13 +109,26 @@ public class NationalStatisticsService {
 
                     Element eElement = (Element) nNode;
 
-                    result.add(
-                            TransactionsDTO.builder()
-                                    .regionNm(getTagValue("regionNm", eElement))
-                                    .rsRow(getTagValue("rsRow", eElement))
-                                    .build()
-                    );
+                    String rsRow = getTagValue("rsRow", eElement);
 
+                    String regionNm = getTagValue("regionNm", eElement);
+
+                    List<TransactionsDTO> transactionsList = Arrays.stream(rsRow.split("\\|"))
+                            .map(countData -> {
+
+                                String[] arrayOfRsRow = countData.split(",");
+
+                                String standardDate = passerByStandardDate(arrayOfRsRow[0], dto.isYear());
+
+                                return TransactionsDTO.builder()
+                                        .regionName(regionNm)
+                                        .date(standardDate)
+                                        .count(arrayOfRsRow[1])
+                                        .build();
+                            })
+                            .collect(Collectors.toList());
+
+                    result.addAll(transactionsList);
                 }
 
             }
@@ -111,6 +138,25 @@ public class NationalStatisticsService {
         }
 
         return result;
+    }
+
+    private String passerByStandardDate(String standardDate, boolean isYear) {
+
+        if (isYear == Boolean.TRUE) {
+            return standardDate;
+        }
+
+        int standardDateSize = standardDate.length();
+
+        return standardDate.substring(0, 4) + "-" + standardDate.substring(4, standardDateSize);
+    }
+
+    private String getByStartDateParam(boolean isYear, String startDate) {
+        return (isYear ? "&startyear=" : "&startmonth=") + startDate;
+    }
+
+    private String getByEndDateParam(boolean isYear, String endDate) {
+        return (isYear ? "&endyear=" : "&endmonth=") + endDate;
     }
 
 }
