@@ -1,6 +1,5 @@
 package io.gonzo.middleware.web;
 
-import io.gonzo.middleware.enums.AreaCodeTypes;
 import io.gonzo.middleware.service.AreaCodeService;
 import io.gonzo.middleware.web.dto.AreaCodeDTO;
 import io.gonzo.middleware.web.dto.AreaCodeStoreDTO;
