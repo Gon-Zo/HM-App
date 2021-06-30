@@ -51,4 +51,15 @@ class NationalStatisticsResourceTest {
         String test1 ="";
     }
 
+    @Test
+    @DisplayName("부동산 거래 건수 API")
+    void showTransactions() throws Exception {
+        final ResultActions actions = mvc.perform(get("/api/national-statistics/number-transactions")
+                .param("startDate", "202010")
+                .param("endDate", "202010")
+                .param("region", "11000")
+                .param("isYear", "false")
+        );
+    }
+
 }
