@@ -70,8 +70,21 @@ public class NationalStatisticsService {
 
             String url = "http://openapi.reb.or.kr/OpenAPI_ToolInstallPackage/service/rest/RealEstateTradingSvc/";
 
-            url += isYear ? "getRealEstateTradingCountYear" : "getRealEstateTradingCount";
+//            url += isYear ? "getRealEstateTradingCountYear" : "getRealEstateTradingCount";
 
+            switch (dto.getApiCode()) {
+                case "RealEstateTradingCountYear":
+                    url += "getRealEstateTradingCountYear";
+                    break;
+                case "RealEstateTradingCount":
+                    url += "getRealEstateTradingCount";
+                    break;
+                default:
+                    url += "";
+                    break;
+            }
+
+            // todo : api 별로 파라미터 바꾸기
             stringBuffer.append(url)
                     .append("?ServiceKey=")
                     .append(key)
