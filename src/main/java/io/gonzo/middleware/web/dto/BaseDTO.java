@@ -15,4 +15,5 @@ public class BaseDTO {
 
     private boolean isYear;
 
+    private String apiCode;
 }

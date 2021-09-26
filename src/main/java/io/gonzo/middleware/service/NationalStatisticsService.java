@@ -44,15 +44,18 @@ public class NationalStatisticsService {
 
         String endMonth = dto.getEndDate();
 
+        String apiCode = dto.getApiCode();
+
         return parentsList.stream().map(parents ->
-                getNumberOfTransactions(
-                        TransactionsStoreDTO.builder()
-                                .startDate(startMonth)
-                                .endDate(endMonth)
-                                .isYear(dto.isYear())
-                                .region(parents.getCode())
-                                .build()
-                ))
+                        getNumberOfTransactions(
+                                TransactionsStoreDTO.builder()
+                                        .startDate(startMonth)
+                                        .endDate(endMonth)
+                                        .isYear(dto.isYear())
+                                        .apiCode(apiCode)
+                                        .region(parents.getCode())
+                                        .build()
+                        ))
                 .flatMap(Collection::parallelStream)
                 .collect(Collectors.toList());
     }
