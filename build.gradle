@@ -42,4 +42,20 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	/*
+	./gradlew build -Pjasypt.encryptor.password=
+	*/
+	systemProperty "jasypt.encryptor.password", project.getProperties().get("jasypt.encryptor.password")
 }
+
+//processResources {
+//	inputs.property('version', version)
+//	filesMatching("**/application.yml") {
+//		filter {
+//			it.replace("#project.version#", version)
+//		}
+//		filter {
+//			it.replace("#jasypt.encryptor.password#", "PDDHOMEAPI88786")
+//		}
+//	}
+//}
