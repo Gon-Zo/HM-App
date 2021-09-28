@@ -22,6 +22,10 @@ public class AreaCodeResource {
 
     private final AreaCodeService service;
 
+    /**
+     * 직역 코드 api
+     * @return
+     */
     @GetMapping("")
     public List<AreaCodeStoreDTO> showAreaList() {
 
