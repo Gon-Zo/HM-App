@@ -15,6 +15,4 @@ public class CheckResource {
         return Instant.now();
     }
 
-    
-
 }
