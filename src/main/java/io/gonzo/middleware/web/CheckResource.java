@@ -11,8 +11,10 @@ import java.time.Instant;
 public class CheckResource {
 
     @GetMapping("/state")
-    public Instant checkByState(){
+    public Instant checkByState() {
         return Instant.now();
     }
+
+    
 
 }
