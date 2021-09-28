@@ -6,6 +6,7 @@ import io.gonzo.middleware.web.dto.TransactionsDTO;
 import io.gonzo.middleware.web.dto.TransactionsStoreDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
@@ -73,8 +74,6 @@ public class NationalStatisticsService {
 
             String url = "http://openapi.reb.or.kr/OpenAPI_ToolInstallPackage/service/rest/RealEstateTradingSvc/";
 
-//            url += isYear ? "getRealEstateTradingCountYear" : "getRealEstateTradingCount";
-
             switch (dto.getApiCode()) {
                 case "RealEstateTradingCountYear":
                     url += "getRealEstateTradingCountYear";
@@ -82,17 +81,14 @@ public class NationalStatisticsService {
                 case "RealEstateTradingCount":
                     url += "getRealEstateTradingCount";
                     break;
-                default:
-                    url += "";
-                    break;
             }
 
             // todo : api 별로 파라미터 바꾸기
             stringBuffer.append(url)
                     .append("?ServiceKey=")
                     .append(key)
-                    .append(getByStartDateParam(isYear, dto.getStartDate()))
-                    .append(getByEndDateParam(isYear, dto.getEndDate()))
+                    .append(getByDateFormat(isYear, dto.getStartDate(), Boolean.TRUE))
+                    .append(getByDateFormat(isYear, dto.getEndDate(), Boolean.FALSE))
                     .append("&region=")
                     .append(dto.getRegion())
                     .append("&tradingtype=")
@@ -166,12 +162,21 @@ public class NationalStatisticsService {
         return standardDate.substring(0, 4) + "-" + standardDate.substring(4, standardDateSize);
     }
 
-    private String getByStartDateParam(boolean isYear, String startDate) {
-        return (isYear ? "&startyear=" : "&startmonth=") + startDate;
-    }
+    private String getByDateFormat(boolean isYear, String dateStr, boolean isStart) {
 
-    private String getByEndDateParam(boolean isYear, String endDate) {
-        return (isYear ? "&endyear=" : "&endmonth=") + endDate;
+        String format;
+
+        if (isStart && isYear) {
+            format = "&startyear=%s";
+        } else if (isStart && !isYear) {
+            format = "&startmonth=%s";
+        } else if (!isStart && isYear) {
+            format = "&endyear=%s";
+        } else {
+            format = "&endmonth=%s";
+        }
+
+        return String.format(format, dateStr);
     }
 
 }

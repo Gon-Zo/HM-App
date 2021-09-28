@@ -16,5 +16,6 @@ public class TransactionsStoreDTO {
 
     private boolean isYear;
 
+    @NonNull
     private String apiCode;
 }
