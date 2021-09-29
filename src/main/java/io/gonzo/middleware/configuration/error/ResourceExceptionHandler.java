@@ -1,7 +1,7 @@
-package io.gonzo.middleware.config;
+package io.gonzo.middleware.configuration.error;
 
 import io.gonzo.middleware.enums.ErrorCode;
-import io.gonzo.middleware.web.dto.ErrorDTO;
+import io.gonzo.middleware.configuration.error.ErrorDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ import java.time.Instant;
 import static io.gonzo.middleware.enums.ErrorCode.*;
 
 @ControllerAdvice
-public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {

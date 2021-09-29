@@ -1,4 +1,4 @@
-package io.gonzo.middleware.web.dto;
+package io.gonzo.middleware.configuration.error;
 
 import lombok.Builder;
 import lombok.Getter;
