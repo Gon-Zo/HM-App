@@ -8,16 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BaseDTO {
+public class NationwideTransactionStoreDTO {
 
     private String startDate;
 
     private String endDate;
 
     private NationalStatisticTypes apiCode;
-
-    public boolean setYearYn(){
-        return "Year".contains(this.apiCode.name());
-    }
 
 }

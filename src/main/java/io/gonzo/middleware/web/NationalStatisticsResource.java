@@ -1,7 +1,8 @@
 package io.gonzo.middleware.web;
 
 import io.gonzo.middleware.service.NationalStatisticsService;
-import io.gonzo.middleware.web.dto.BaseDTO;
+import io.gonzo.middleware.utils.AppUtils;
+import io.gonzo.middleware.web.dto.NationwideTransactionStoreDTO;
 import io.gonzo.middleware.web.dto.TransactionsDTO;
 import io.gonzo.middleware.web.dto.TransactionsStoreDTO;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +21,15 @@ public class NationalStatisticsResource {
 
     // 전구 부동산 거래 건수
     @GetMapping("/nationwide/number-transactions")
-    public List<TransactionsDTO> showTransactionsByNationwide(BaseDTO dto) {
+    public List<TransactionsDTO> showTransactionsByNationwide(NationwideTransactionStoreDTO dto) {
         return service.getNumberOfTransactionsByNationwide(dto);
     }
 
     // 부동산 거래 건수
     @GetMapping("/number-transactions")
     public List<TransactionsDTO> showTransactions(TransactionsStoreDTO dto) {
+        dto.setYear(AppUtils.setYearYn(dto.getApiCode().name()));
+
         return service.getNumberOfTransactions(dto);
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class DtoUtils {
+public class AppUtils {
 
     public static String changeToByPicker(String pickDate) {
         return pickDate.replace("-", "");
@@ -31,6 +31,10 @@ public class DtoUtils {
         DateTimeFormatter pattern = DateTimeFormatter.ofPattern("yyyyMM");
         String formattedString = date.format(pattern);
         return formattedString;
+    }
+
+    public static boolean setYearYn(String codeName){
+        return "Year".contains(codeName);
     }
 
 }
