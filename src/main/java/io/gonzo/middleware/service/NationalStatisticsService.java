@@ -1,5 +1,6 @@
 package io.gonzo.middleware.service;
 
+import io.gonzo.middleware.enums.NationalStatisticTypes;
 import io.gonzo.middleware.web.dto.AreaCodeDTO;
 import io.gonzo.middleware.web.dto.BaseDTO;
 import io.gonzo.middleware.web.dto.TransactionsDTO;
@@ -36,7 +37,12 @@ public class NationalStatisticsService {
 
     private final AreaCodeService areaCodeService;
 
-    // [전국 조회] 부동산 거래 건수 조회
+    /**
+     * [전국 조회] 부동산 거래 건수 조회
+     *
+     * @param dto
+     * @return
+     */
     public List<TransactionsDTO> getNumberOfTransactionsByNationwide(BaseDTO dto) {
 
         List<AreaCodeDTO> parentsList = areaCodeService.getAreaCodeToParents();
@@ -45,14 +51,14 @@ public class NationalStatisticsService {
 
         String endMonth = dto.getEndDate();
 
-        String apiCode = dto.getApiCode();
+        NationalStatisticTypes apiCode = dto.getApiCode();
 
         return parentsList.stream().map(parents ->
                         getNumberOfTransactions(
                                 TransactionsStoreDTO.builder()
                                         .startDate(startMonth)
                                         .endDate(endMonth)
-                                        .isYear(dto.isYear())
+                                        .isYear(dto.setYearYn())
                                         .apiCode(apiCode)
                                         .region(parents.getCode())
                                         .build()
@@ -61,7 +67,12 @@ public class NationalStatisticsService {
                 .collect(Collectors.toList());
     }
 
-    // 부동산 거래 건수 조회
+    /**
+     * 부동산 거래 건수 조회
+     *
+     * @param dto
+     * @return
+     */
     public List<TransactionsDTO> getNumberOfTransactions(TransactionsStoreDTO dto) {
 
         List<TransactionsDTO> result = new ArrayList<>();
@@ -74,14 +85,7 @@ public class NationalStatisticsService {
 
             String url = "http://openapi.reb.or.kr/OpenAPI_ToolInstallPackage/service/rest/RealEstateTradingSvc/";
 
-            switch (dto.getApiCode()) {
-                case "RealEstateTradingCountYear":
-                    url += "getRealEstateTradingCountYear";
-                    break;
-                case "RealEstateTradingCount":
-                    url += "getRealEstateTradingCount";
-                    break;
-            }
+            url += dto.getApiCode().getValue();
 
             // todo : api 별로 파라미터 바꾸기
             stringBuffer.append(url)
@@ -95,8 +99,6 @@ public class NationalStatisticsService {
                     .append("01");
 
             String publicUrl = stringBuffer.toString();
-
-            log.info("public url :: >> [ {} ]", publicUrl);
 
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 

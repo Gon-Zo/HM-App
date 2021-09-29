@@ -1,5 +1,6 @@
 package io.gonzo.middleware.web.dto;
 
+import io.gonzo.middleware.enums.NationalStatisticTypes;
 import lombok.*;
 
 @Getter
@@ -17,5 +18,6 @@ public class TransactionsStoreDTO {
     private boolean isYear;
 
     @NonNull
-    private String apiCode;
+    private NationalStatisticTypes apiCode;
+
 }

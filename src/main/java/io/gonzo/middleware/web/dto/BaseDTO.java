@@ -1,5 +1,6 @@
 package io.gonzo.middleware.web.dto;
 
+import io.gonzo.middleware.enums.NationalStatisticTypes;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +14,10 @@ public class BaseDTO {
 
     private String endDate;
 
-    private boolean isYear;
+    private NationalStatisticTypes apiCode;
 
-    private String apiCode;
+    public boolean setYearYn(){
+        return "Year".contains(this.apiCode.name());
+    }
+
 }
