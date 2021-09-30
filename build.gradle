@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.2'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.4.2'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 assert System.properties["java.specification.version"] == "1.8" || "11" || "12" || "13" || "14"
 
@@ -13,26 +13,34 @@ apply from: 'gradle/utils.gradle'
 apply plugin: 'base'
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:1.17"
+    //jpa
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
-	// csv reader
-	implementation group: 'com.opencsv', name: 'opencsv', version: '3.7'
+    // mysql
+    implementation 'mysql:mysql-connector-java'
+    runtimeOnly 'mysql:mysql-connector-java'
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:1.17"
+
+    // csv reader
+    //implementation group: 'com.opencsv', name: 'opencsv', version: '3.7'
 }
 
 //clean {
@@ -41,11 +49,11 @@ dependencies {
 //}
 
 test {
-	useJUnitPlatform()
-	/*
-	./gradlew build -Pjasypt.encryptor.password=
-	*/
-	systemProperty "jasypt.encryptor.password", project.getProperties().get("jasypt.encryptor.password")
+    useJUnitPlatform()
+    /*
+    ./gradlew build -Pjasypt.encryptor.password=
+    */
+    systemProperty "jasypt.encryptor.password", project.getProperties().get("jasypt.encryptor.password")
 }
 
 //processResources {

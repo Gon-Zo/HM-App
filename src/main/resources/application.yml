@@ -1,2 +1,32 @@
 app:
   key: ENC(gHHkISfiUqks7iKyKuk8u4YgNXBsnrWOByJzgYbyXbIivfbBcDAFD03gdgiwtNpQbK6g3WxEi3ajaaeLX0XXdEhtgPU4cT/7uaC0cqgabTUMCc7wfq5Qr2LKQSDPZkHj6n+GpZtgyQwvKGq53GdrwA==)
+
+spring:
+  application:
+    name: RealEstateTraceApp
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate.format_sql: true
+      hibernate.jdbc.lob.non_contextual_creation: true
+      hibernate.jdbc.time_zone: UTC
+      hibernate.id.new_generator_mappings: true
+      hibernate.jdbc.batch_size: 50
+      hibernate.order_inserts: true
+      hibernate.order_updates: true
+    database: mysql
+  datasource:
+    url: ENC(szlJBMKSy3gAmOJKY5exDNf9tLFUclRk5OgncLsX+jEAGBuQ6IpEXOjKiXx6ap2wDJMXf6gOWrkSM/pXpeT0ppIKm9cPhG/GOKDBondiLPGWJzcBWm3Wsw==)
+    hikari:
+      username: ENC(6qNDgYyfFLWZ51eQGxLIGA==)
+      password: ENC(Noo7bQut3KO628TgoTCUUg==)
+
+
+logging:
+  level:
+    org:
+      hibernate.type.descriptor.sql.BasicBinder: TRACE
+

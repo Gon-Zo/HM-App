@@ -45,7 +45,7 @@ public class NationalStatisticsService {
      */
     public List<TransactionsDTO> getNumberOfTransactionsByNationwide(NationwideTransactionStoreDTO dto) {
 
-        List<AreaCodeDTO> parentsList = areaCodeService.getAreaCodeToParents();
+//        List<AreaCodeDTO> parentsList = areaCodeService.getAreaCodeToParents();
 
         String startMonth = dto.getStartDate();
 
@@ -53,17 +53,19 @@ public class NationalStatisticsService {
 
         NationalStatisticTypes apiCode = dto.getApiCode();
 
-        return parentsList
-                .stream()
-                .map(parents -> getNumberOfTransactions(TransactionsStoreDTO.builder()
-                        .startDate(startMonth)
-                        .endDate(endMonth)
-                        .isYear(AppUtils.setYearYn(dto.getApiCode().name()))
-                        .apiCode(apiCode)
-                        .region(parents.getCode())
-                        .build()))
-                .flatMap(Collection::parallelStream)
-                .collect(Collectors.toList());
+        return new ArrayList<>();
+
+//        return parentsList
+//                .stream()
+//                .map(parents -> getNumberOfTransactions(TransactionsStoreDTO.builder()
+//                        .startDate(startMonth)
+//                        .endDate(endMonth)
+//                        .isYear(AppUtils.setYearYn(dto.getApiCode().name()))
+//                        .apiCode(apiCode)
+//                        .region(parents.getCode())
+//                        .build()))
+//                .flatMap(Collection::parallelStream)
+//                .collect(Collectors.toList());
     }
 
     /**

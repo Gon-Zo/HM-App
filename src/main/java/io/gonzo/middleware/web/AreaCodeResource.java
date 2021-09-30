@@ -1,5 +1,6 @@
 package io.gonzo.middleware.web;
 
+import io.gonzo.middleware.domain.AreaCode;
 import io.gonzo.middleware.service.AreaCodeService;
 import io.gonzo.middleware.web.dto.AreaCodeDTO;
 import io.gonzo.middleware.web.dto.AreaCodeStoreDTO;
@@ -22,36 +23,9 @@ public class AreaCodeResource {
 
     private final AreaCodeService service;
 
-    /**
-     * 직역 코드 api
-     * @return
-     */
     @GetMapping("")
-    public List<AreaCodeStoreDTO> showAreaList() {
-
-        List<AreaCodeDTO> areaList = service.getAreaCodeList();
-
-        return areaList.stream()
-                .filter(area -> P.equals(area.getType()))
-                .map(parents -> {
-
-                    Integer index = parents.getIndex();
-
-                    List<AreaCodeDTO> childList = areaList.stream()
-                            .filter(child -> child.getParentsIndex().equals(index))
-                            .collect(Collectors.toList());
-
-                    return AreaCodeStoreDTO.builder()
-                            .index(index)
-                            .code(parents.getCode())
-                            .title(parents.getTitle())
-                            .parentsIndex(parents.getParentsIndex())
-                            .type(parents.getType())
-                            .childList(childList)
-                            .build();
-                })
-                .collect(Collectors.toList());
-
+    public List<AreaCode> showByAreaCodes() {
+        return service.getByAreaCodes();
     }
 
 }
