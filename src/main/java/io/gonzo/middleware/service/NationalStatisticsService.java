@@ -2,10 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.enums.NationalStatisticTypes;
 import io.gonzo.middleware.utils.AppUtils;
-import io.gonzo.middleware.web.dto.AreaCodeDTO;
-import io.gonzo.middleware.web.dto.NationwideTransactionStoreDTO;
-import io.gonzo.middleware.web.dto.TransactionsDTO;
-import io.gonzo.middleware.web.dto.TransactionsStoreDTO;
+import io.gonzo.middleware.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +42,7 @@ public class NationalStatisticsService {
      */
     public List<TransactionsDTO> getNumberOfTransactionsByNationwide(NationwideTransactionStoreDTO dto) {
 
-//        List<AreaCodeDTO> parentsList = areaCodeService.getAreaCodeToParents();
+        List<IAreaCodeParents> parentsList = areaCodeService.getByParentsTypeAreaList();
 
         String startMonth = dto.getStartDate();
 
@@ -53,19 +50,18 @@ public class NationalStatisticsService {
 
         NationalStatisticTypes apiCode = dto.getApiCode();
 
-        return new ArrayList<>();
+        return parentsList
+                .stream()
+                .map(parents -> getNumberOfTransactions(TransactionsStoreDTO.builder()
+                        .startDate(startMonth)
+                        .endDate(endMonth)
+                        .isYear(AppUtils.setYearYn(dto.getApiCode().name()))
+                        .apiCode(apiCode)
+                        .region(parents.getCode())
+                        .build()))
+                .flatMap(Collection::parallelStream)
+                .collect(Collectors.toList());
 
-//        return parentsList
-//                .stream()
-//                .map(parents -> getNumberOfTransactions(TransactionsStoreDTO.builder()
-//                        .startDate(startMonth)
-//                        .endDate(endMonth)
-//                        .isYear(AppUtils.setYearYn(dto.getApiCode().name()))
-//                        .apiCode(apiCode)
-//                        .region(parents.getCode())
-//                        .build()))
-//                .flatMap(Collection::parallelStream)
-//                .collect(Collectors.toList());
     }
 
     /**

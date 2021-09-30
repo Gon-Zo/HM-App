@@ -39,6 +39,8 @@ dependencies {
 
     implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:1.17"
 
+    implementation 'org.apache.commons:commons-lang3:3.9'
+
     // csv reader
     //implementation group: 'com.opencsv', name: 'opencsv', version: '3.7'
 }
