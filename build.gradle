@@ -41,14 +41,7 @@ dependencies {
 
     implementation 'org.apache.commons:commons-lang3:3.9'
 
-    // csv reader
-    //implementation group: 'com.opencsv', name: 'opencsv', version: '3.7'
 }
-
-//clean {
-//	delete "${rootDir}/api-library/auto-generated-classes/"
-//	println "${rootDir}/api-library/auto-generated-classes/"
-//}
 
 test {
     useJUnitPlatform()
@@ -57,15 +50,3 @@ test {
     */
     systemProperty "jasypt.encryptor.password", project.getProperties().get("jasypt.encryptor.password")
 }
-
-//processResources {
-//	inputs.property('version', version)
-//	filesMatching("**/application.yml") {
-//		filter {
-//			it.replace("#project.version#", version)
-//		}
-//		filter {
-//			it.replace("#jasypt.encryptor.password#", "PDDHOMEAPI88786")
-//		}
-//	}
-//}
