@@ -53,15 +53,15 @@ public class NationalStatisticsService {
         return parentsList
                 .stream()
                 .map(parents -> getNumberOfTransactions(TransactionsStoreDTO.builder()
-                        .startDate(startMonth)
-                        .endDate(endMonth)
-                        .isYear(AppUtils.setYearYn(dto.getApiCode().name()))
-                        .apiCode(apiCode)
-                        .region(parents.getCode())
-                        .build()))
+                                .startDate(startMonth)
+                                .endDate(endMonth)
+                                .apiCode(apiCode)
+                                .region(parents.getCode())
+                                .typeCode(dto.getTypeCode())
+                                .build()
+                        , AppUtils.setYearYn(dto.getApiCode().name())))
                 .flatMap(Collection::parallelStream)
                 .collect(Collectors.toList());
-
     }
 
     /**
@@ -70,11 +70,9 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    public List<TransactionsDTO> getNumberOfTransactions(TransactionsStoreDTO dto) {
+    public List<TransactionsDTO> getNumberOfTransactions(TransactionsStoreDTO dto, boolean isYear) {
 
         List<TransactionsDTO> result = new ArrayList<>();
-
-        boolean isYear = dto.isYear();
 
         try {
 
@@ -93,7 +91,9 @@ public class NationalStatisticsService {
                     .append("&region=")
                     .append(dto.getRegion())
                     .append("&tradingtype=")
-                    .append("01");
+                    .append(dto.getTypeCode().getValue());
+
+            log.info("URI::===> {}", stringBuffer);
 
             String publicUrl = stringBuffer.toString();
 
@@ -128,7 +128,7 @@ public class NationalStatisticsService {
 
                                 String[] arrayOfRsRow = countData.split(",");
 
-                                String standardDate = passerByStandardDate(arrayOfRsRow[0], dto.isYear());
+                                String standardDate = passerByStandardDate(arrayOfRsRow[0], isYear);
 
                                 return TransactionsDTO.builder()
                                         .regionName(regionNm)

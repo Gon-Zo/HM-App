@@ -28,9 +28,7 @@ public class NationalStatisticsResource {
     // 부동산 거래 건수
     @GetMapping("/number-transactions")
     public List<TransactionsDTO> showTransactions(TransactionsStoreDTO dto) {
-        dto.setYear(AppUtils.setYearYn(dto.getApiCode().name()));
-
-        return service.getNumberOfTransactions(dto);
+        return service.getNumberOfTransactions(dto, AppUtils.setYearYn(dto.getApiCode().name()));
     }
 
 }
