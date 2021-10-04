@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
 import static io.gonzo.middleware.utils.XmlUtils.resultCodeByException;
@@ -40,7 +42,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    public List<TransactionsDTO> getNumberOfTransactionsByNationwide(NationwideTransactionStoreDTO dto) {
+    public List getNumberOfTransactionsByNationwide(NationwideTransactionStoreDTO dto) {
 
         List<IAreaCodeParents> parentsList = areaCodeService.getByParentsTypeAreaList();
 
@@ -50,18 +52,68 @@ public class NationalStatisticsService {
 
         NationalStatisticTypes apiCode = dto.getApiCode();
 
-        return parentsList
+        boolean isYear = AppUtils.setYearYn(dto.getApiCode().name());
+
+        return (List) parentsList
                 .stream()
-                .map(parents -> getNumberOfTransactions(TransactionsStoreDTO.builder()
-                                .startDate(startMonth)
-                                .endDate(endMonth)
-                                .apiCode(apiCode)
-                                .region(parents.getCode())
-                                .typeCode(dto.getTypeCode())
-                                .build()
-                        , AppUtils.setYearYn(dto.getApiCode().name())))
+                .map(parents -> {
+
+                    TransactionsStoreDTO transactionsStoreDTO = TransactionsStoreDTO.builder()
+                            .startDate(startMonth)
+                            .endDate(endMonth)
+                            .apiCode(apiCode)
+                            .region(parents.getCode())
+                            .typeCode(dto.getTypeCode())
+                            .build();
+
+                    return getNumberOfTransactions(transactionsStoreDTO, isYear);
+                })
                 .flatMap(Collection::parallelStream)
                 .collect(Collectors.toList());
+
+    }
+
+    public List getNumberOfTransactions(TransactionsStoreDTO dto, boolean isYear) {
+
+        List<BaseStatisticsDTO> baseList = createByNumberOfTransactions(dto, isYear);
+
+        if (CollectionUtils.isEmpty(baseList)) {
+            return new ArrayList();
+        }
+
+        switch (dto.getApiCode()) {
+            case RealEstateTradingCount: {
+                return createByDefaultDTO(baseList, isYear);
+            }
+            default:
+                return baseList;
+        }
+
+    }
+
+    private List<TransactionsDTO> createByDefaultDTO(List<BaseStatisticsDTO> baseList, boolean isYear) {
+
+        BaseStatisticsDTO baseStatisticsDTO = baseList.get(0);
+
+        String regionNm = baseStatisticsDTO.getRegionNm();
+
+        return Arrays.stream(baseStatisticsDTO.getRsRow().split("\\|"))
+                .map(baseItem -> {
+
+
+                    String[] arrayOfRsRow = baseItem.split(",");
+
+                    String standardDate = passerByStandardDate(arrayOfRsRow[0], isYear);
+
+                    return TransactionsDTO.builder()
+                            .regionName(regionNm)
+                            .date(standardDate)
+                            .count(arrayOfRsRow[1])
+                            .build();
+
+                })
+                .collect(Collectors.toList());
+
     }
 
     /**
@@ -70,9 +122,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    public List<TransactionsDTO> getNumberOfTransactions(TransactionsStoreDTO dto, boolean isYear) {
-
-        List<TransactionsDTO> result = new ArrayList<>();
+    private List<BaseStatisticsDTO> createByNumberOfTransactions(TransactionsStoreDTO dto, boolean isYear) {
 
         try {
 
@@ -111,43 +161,62 @@ public class NationalStatisticsService {
 
             int itemSize = nList.getLength();
 
-            for (int temp = 0; temp < itemSize; temp++) {
+            return IntStream.range(0, itemSize)
+                    .filter(num -> Node.ELEMENT_NODE == nList.item(num).getNodeType())
+                    .mapToObj(num -> {
 
-                Node nNode = nList.item(temp);
+                        Node nNode = nList.item(num);
 
-                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                        Element eElement = (Element) nNode;
 
-                    Element eElement = (Element) nNode;
+                        String regionCd = getTagValue("regionCd", eElement);
 
-                    String rsRow = getTagValue("rsRow", eElement);
+                        String rsRow = getTagValue("rsRow", eElement);
 
-                    String regionNm = getTagValue("regionNm", eElement);
+                        String regionNm = getTagValue("regionNm", eElement);
 
-                    List<TransactionsDTO> transactionsList = Arrays.stream(rsRow.split("\\|"))
-                            .map(countData -> {
+                        return BaseStatisticsDTO
+                                .builder()
+                                .regionCd(regionCd)
+                                .regionNm(regionNm)
+                                .rsRow(rsRow)
+                                .build();
+                    })
+                    .collect(Collectors.toList());
 
-                                String[] arrayOfRsRow = countData.split(",");
-
-                                String standardDate = passerByStandardDate(arrayOfRsRow[0], isYear);
-
-                                return TransactionsDTO.builder()
-                                        .regionName(regionNm)
-                                        .date(standardDate)
-                                        .count(arrayOfRsRow[1])
-                                        .build();
-                            })
-                            .collect(Collectors.toList());
-
-                    result.addAll(transactionsList);
-                }
-
-            }
+//            for (int temp = 0; temp < itemSize; temp++) {
+//
+//                Node nNode = nList.item(temp);
+//
+//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+//
+//                    Element eElement = (Element) nNode;
+//
+////                    List<TransactionsDTO> transactionsList = Arrays.stream(rsRow.split("\\|"))
+////                            .map(countData -> {
+////
+////                                String[] arrayOfRsRow = countData.split(",");
+////
+////                                String standardDate = passerByStandardDate(arrayOfRsRow[0], isYear);
+////
+////                                return TransactionsDTO.builder()
+////                                        .regionName(regionNm)
+////                                        .date(standardDate)
+////                                        .count(arrayOfRsRow[1])
+////                                        .build();
+////                            })
+////                            .collect(Collectors.toList());
+//
+////                    result.addAll(transactionsList);
+//                }
+//
+//            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return result;
+        return new ArrayList<>();
     }
 
     private String passerByStandardDate(String standardDate, boolean isYear) {
