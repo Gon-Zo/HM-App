@@ -175,6 +175,8 @@ public class NationalStatisticsService {
             format = "&endmonth=%s";
         }
 
+        dateStr = isYear ? dateStr.substring(0, 4) : dateStr;
+
         return String.format(format, dateStr);
     }
 

@@ -34,7 +34,7 @@ public class AppUtils {
     }
 
     public static boolean setYearYn(String codeName){
-        return "Year".contains(codeName);
+        return codeName.contains("Year");
     }
 
 }
