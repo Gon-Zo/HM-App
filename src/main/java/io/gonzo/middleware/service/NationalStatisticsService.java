@@ -184,34 +184,6 @@ public class NationalStatisticsService {
                     })
                     .collect(Collectors.toList());
 
-//            for (int temp = 0; temp < itemSize; temp++) {
-//
-//                Node nNode = nList.item(temp);
-//
-//                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-//
-//                    Element eElement = (Element) nNode;
-//
-////                    List<TransactionsDTO> transactionsList = Arrays.stream(rsRow.split("\\|"))
-////                            .map(countData -> {
-////
-////                                String[] arrayOfRsRow = countData.split(",");
-////
-////                                String standardDate = passerByStandardDate(arrayOfRsRow[0], isYear);
-////
-////                                return TransactionsDTO.builder()
-////                                        .regionName(regionNm)
-////                                        .date(standardDate)
-////                                        .count(arrayOfRsRow[1])
-////                                        .build();
-////                            })
-////                            .collect(Collectors.toList());
-//
-////                    result.addAll(transactionsList);
-//                }
-//
-//            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
