@@ -1,25 +1,12 @@
 package io.gonzo.middleware.web.dto;
 
-import io.gonzo.middleware.enums.NationalStatisticTypes;
-import io.gonzo.middleware.enums.TransactionTypeCodes;
+import io.gonzo.middleware.web.dto.base.BaseTransactionsDTO;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@Builder
-@AllArgsConstructor
-public class TransactionsStoreDTO {
-
-    private String startDate;
-
-    private String endDate;
-
+@SuperBuilder
+public class TransactionsStoreDTO extends BaseTransactionsDTO {
     private String region;
-
-    @NonNull
-    private NationalStatisticTypes apiCode;
-
-    @NonNull
-    TransactionTypeCodes typeCode;
-
 }
