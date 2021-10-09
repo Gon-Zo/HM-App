@@ -2,9 +2,7 @@ package io.gonzo.middleware.web;
 
 import io.gonzo.middleware.service.NationalStatisticsService;
 import io.gonzo.middleware.utils.AppUtils;
-import io.gonzo.middleware.web.dto.BaseStatisticsDTO;
 import io.gonzo.middleware.web.dto.NationwideTransactionStoreDTO;
-import io.gonzo.middleware.web.dto.TransactionsDTO;
 import io.gonzo.middleware.web.dto.TransactionsStoreDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

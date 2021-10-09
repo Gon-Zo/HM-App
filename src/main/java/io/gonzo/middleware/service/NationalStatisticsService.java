@@ -3,6 +3,7 @@ package io.gonzo.middleware.service;
 import io.gonzo.middleware.enums.NationalStatisticTypes;
 import io.gonzo.middleware.utils.AppUtils;
 import io.gonzo.middleware.web.dto.*;
+import io.gonzo.middleware.web.dto.base.BaseStatisticsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -99,7 +100,6 @@ public class NationalStatisticsService {
 
         return Arrays.stream(baseStatisticsDTO.getRsRow().split("\\|"))
                 .map(baseItem -> {
-
 
                     String[] arrayOfRsRow = baseItem.split(",");
 

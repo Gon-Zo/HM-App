@@ -1,4 +1,4 @@
-package io.gonzo.middleware.web.dto;
+package io.gonzo.middleware.web.dto.base;
 
 import lombok.Builder;
 import lombok.Getter;
