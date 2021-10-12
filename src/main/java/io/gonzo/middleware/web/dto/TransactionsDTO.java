@@ -2,22 +2,21 @@ package io.gonzo.middleware.web.dto;
 
 import lombok.*;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class TransactionsDTO {
 
-    private String regionName;
-
-    private String date;
-
-    private Integer count;
-
+    @Getter
+    @Setter
     @Builder
-    public TransactionsDTO(String regionName, String date, String count) {
-        this.regionName = regionName;
-        this.date = date;
-        this.count = Integer.valueOf(count);
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Default {
+
+        private String regionName;
+
+        private String date;
+
+        private Integer count;
+
     }
 
 }

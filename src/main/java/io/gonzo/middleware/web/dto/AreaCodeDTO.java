@@ -7,28 +7,52 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Setter
-@Getter
-@SuperBuilder
-@NoArgsConstructor
+import java.util.List;
+
 public class AreaCodeDTO {
 
-    private Integer index;
+    @Setter
+    @Getter
+    @SuperBuilder
+    @NoArgsConstructor
+    public static class Default {
 
-    private String code;
+        private Integer index;
 
-    private String title;
+        private String code;
 
-    private AreaCodeTypes type;
+        private String title;
 
-    private Integer parentsIndex;
+        private AreaCodeTypes type;
 
-    public AreaCodeDTO(Integer index, String code, String title, AreaCodeTypes type, Integer parentsIndex) {
-        this.index = index;
-        this.code = code;
-        this.title = title;
-        this.type = type;
-        this.parentsIndex = parentsIndex;
+        private Integer parentsIndex;
+
+        public Default(Integer index, String code, String title, AreaCodeTypes type, Integer parentsIndex) {
+            this.index = index;
+            this.code = code;
+            this.title = title;
+            this.type = type;
+            this.parentsIndex = parentsIndex;
+        }
+    }
+
+    @Getter
+    @SuperBuilder
+    public static class Store extends Default {
+        @Setter
+        private List<AreaCodeDTO> childList;
+    }
+
+    public interface IAreaCodeParents {
+
+        Long getId();
+
+        String getCode();
+
+        String getName();
+
+        String getType();
+
     }
 
 }

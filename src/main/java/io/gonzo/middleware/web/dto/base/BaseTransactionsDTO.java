@@ -18,6 +18,6 @@ public class BaseTransactionsDTO {
     private NationalStatisticTypes apiCode;
 
     @NonNull
-    TransactionTypeCodes typeCode;
+    private TransactionTypeCodes typeCode;
 
 }

@@ -2,7 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.domain.AreaCode;
 import io.gonzo.middleware.repository.AreaCodeRepository;
-import io.gonzo.middleware.web.dto.IAreaCodeParents;
+import io.gonzo.middleware.web.dto.AreaCodeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +20,7 @@ public class AreaCodeService {
     private final AreaCodeRepository repository;
 
     @Transactional(readOnly = true)
-    public List<AreaCode> getByAreaCodes() {
+    public List<AreaCode> getByAreaCodeList() {
         Optional<List<AreaCode>> areaCodeListOptional = repository.findByNameIsNot("root");
 
         if (areaCodeListOptional.isPresent()) {
@@ -34,8 +34,8 @@ public class AreaCodeService {
     }
 
     @Transactional(readOnly = true)
-    public List<IAreaCodeParents> getByParentsTypeAreaList() {
-        Optional<List<IAreaCodeParents>> parentsAreaCodeListOptional = repository.findByNameIsNotAndType("root", "P", IAreaCodeParents.class);
+    public List<AreaCodeDTO.IAreaCodeParents> getByParentsTypeAreaList() {
+        Optional<List<AreaCodeDTO.IAreaCodeParents>> parentsAreaCodeListOptional = repository.findByNameIsNotAndType("root", "P", AreaCodeDTO.IAreaCodeParents.class);
 
         if(parentsAreaCodeListOptional.isPresent()){
             return parentsAreaCodeListOptional.get();

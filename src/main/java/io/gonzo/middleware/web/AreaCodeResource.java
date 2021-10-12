@@ -19,8 +19,8 @@ public class AreaCodeResource {
     private final AreaCodeService service;
 
     @GetMapping("")
-    public List<AreaCode> showByAreaCodes() {
-        return service.getByAreaCodes();
+    public List<AreaCode> showByAreaCodeList() {
+        return service.getByAreaCodeList();
     }
 
 }

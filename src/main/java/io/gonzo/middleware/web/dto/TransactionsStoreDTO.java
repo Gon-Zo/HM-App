@@ -4,9 +4,20 @@ import io.gonzo.middleware.web.dto.base.BaseTransactionsDTO;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
-@SuperBuilder
-public class TransactionsStoreDTO extends BaseTransactionsDTO {
-    private String region;
+public class TransactionsStoreDTO  {
+
+    @Getter
+    @Setter
+    @SuperBuilder
+    public static class Default extends BaseTransactionsDTO{
+        private String region;
+    }
+
+    @Getter
+    @Setter
+    @SuperBuilder
+    public static class Nationwide extends BaseTransactionsDTO {
+
+    }
+
 }

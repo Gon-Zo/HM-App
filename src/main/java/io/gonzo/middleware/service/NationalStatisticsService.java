@@ -43,9 +43,9 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    public List getNumberOfTransactionsByNationwide(NationwideTransactionStoreDTO dto) {
+    public List getNumberOfTransactionsByNationwide(TransactionsStoreDTO.Nationwide dto) {
 
-        List<IAreaCodeParents> parentsList = areaCodeService.getByParentsTypeAreaList();
+        List<AreaCodeDTO.IAreaCodeParents> parentsList = areaCodeService.getByParentsTypeAreaList();
 
         String startMonth = dto.getStartDate();
 
@@ -59,7 +59,7 @@ public class NationalStatisticsService {
                 .stream()
                 .map(parents -> {
 
-                    TransactionsStoreDTO transactionsStoreDTO = TransactionsStoreDTO.builder()
+                    TransactionsStoreDTO.Default transactionsStoreDTO = TransactionsStoreDTO.Default.builder()
                             .startDate(startMonth)
                             .endDate(endMonth)
                             .apiCode(apiCode)
@@ -74,7 +74,7 @@ public class NationalStatisticsService {
 
     }
 
-    public List getNumberOfTransactions(TransactionsStoreDTO dto, boolean isYear) {
+    public List getNumberOfTransactions(TransactionsStoreDTO.Default dto, boolean isYear) {
 
         List<BaseStatisticsDTO> baseList = createByNumberOfTransactions(dto, isYear);
 
@@ -92,7 +92,7 @@ public class NationalStatisticsService {
 
     }
 
-    private List<TransactionsDTO> createByDefaultDTO(List<BaseStatisticsDTO> baseList, boolean isYear) {
+    private List<TransactionsDTO.Default> createByDefaultDTO(List<BaseStatisticsDTO> baseList, boolean isYear) {
 
         BaseStatisticsDTO baseStatisticsDTO = baseList.get(0);
 
@@ -105,10 +105,10 @@ public class NationalStatisticsService {
 
                     String standardDate = passerByStandardDate(arrayOfRsRow[0], isYear);
 
-                    return TransactionsDTO.builder()
+                    return TransactionsDTO.Default.builder()
                             .regionName(regionNm)
                             .date(standardDate)
-                            .count(arrayOfRsRow[1])
+                            .count(Integer.valueOf(arrayOfRsRow[1]))
                             .build();
 
                 })
@@ -122,7 +122,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    private List<BaseStatisticsDTO> createByNumberOfTransactions(TransactionsStoreDTO dto, boolean isYear) {
+    private List<BaseStatisticsDTO> createByNumberOfTransactions(TransactionsStoreDTO.Default dto, boolean isYear) {
 
         try {
 
