@@ -1,7 +1,6 @@
 package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.enums.NationalStatisticTypes;
-import io.gonzo.middleware.utils.AppUtils;
 import io.gonzo.middleware.web.dto.*;
 import io.gonzo.middleware.web.dto.base.BaseStatisticsDTO;
 import lombok.RequiredArgsConstructor;
@@ -24,8 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static io.gonzo.middleware.utils.XmlUtils.getTagValue;
-import static io.gonzo.middleware.utils.XmlUtils.resultCodeByException;
+import static io.gonzo.middleware.utils.ApiServerUtils.*;
 
 @Slf4j
 @Service
@@ -53,7 +51,7 @@ public class NationalStatisticsService {
 
         NationalStatisticTypes apiCode = dto.getApiCode();
 
-        boolean isYear = AppUtils.setYearYn(dto.getApiCode().name());
+        boolean isYear = setYearYn(dto.getApiCode().name());
 
         return (List) parentsList
                 .stream()

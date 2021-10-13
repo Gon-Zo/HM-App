@@ -7,7 +7,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 @Slf4j
-public class XmlUtils {
+public class ApiServerUtils {
+
+    public static boolean setYearYn(String codeName) {
+        return codeName.contains("Year");
+    }
 
     public static String getTagValue(String tag, Element eElement) {
         NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
@@ -38,7 +42,7 @@ public class XmlUtils {
         if (resultCode.equals("99")) {
             throw new NullPointerException();
         }
-        
+
     }
 
 }
