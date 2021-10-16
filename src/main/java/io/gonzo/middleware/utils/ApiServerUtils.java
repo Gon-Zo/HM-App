@@ -6,6 +6,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 @Slf4j
 public class ApiServerUtils {
 
@@ -39,10 +42,36 @@ public class ApiServerUtils {
 
         log.info("resultMsg :: >> {}", resultMsg);
 
-        if (resultCode.equals("99")) {
+        if ("99".equals(resultCode)) {
             throw new NullPointerException();
         }
 
+    }
+
+    public static NodeList getByPublicApiItems(String publicUrl) {
+
+        log.info("URI:: {}", publicUrl);
+
+        NodeList nodeList = null;
+
+        try {
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+
+            Document doc = dBuilder.parse(publicUrl);
+
+            doc.getDocumentElement().normalize();
+
+            resultCodeByException(doc);
+
+            nodeList = doc.getElementsByTagName("item");
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            return nodeList;
+        }
     }
 
 }

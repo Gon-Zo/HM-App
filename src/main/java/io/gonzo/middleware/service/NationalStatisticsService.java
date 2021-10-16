@@ -8,13 +8,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -141,21 +138,9 @@ public class NationalStatisticsService {
                     .append("&tradingtype=")
                     .append(dto.getTypeCode().getValue());
 
-            log.info("URI::===> {}", stringBuffer);
-
             String publicUrl = stringBuffer.toString();
 
-            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-
-            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-
-            Document doc = dBuilder.parse(publicUrl);
-
-            doc.getDocumentElement().normalize();
-
-            resultCodeByException(doc);
-
-            NodeList nList = doc.getElementsByTagName("item");
+            NodeList nList = getByPublicApiItems(publicUrl);
 
             int itemSize = nList.getLength();
 

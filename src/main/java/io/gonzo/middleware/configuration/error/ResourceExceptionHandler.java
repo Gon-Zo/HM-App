@@ -22,6 +22,7 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {IllegalArgumentException.class, IllegalStateException.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "This should be application specific";
+        ex.printStackTrace();
         return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
@@ -29,6 +30,8 @@ public class ResourceExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleConflict(NullPointerException ex, WebRequest request) {
 
         ErrorCode error = NULL_POINT_ERROR;
+
+        ex.printStackTrace();
 
         ErrorDTO dto = ErrorDTO.builder()
                 .code(error.getCode())
