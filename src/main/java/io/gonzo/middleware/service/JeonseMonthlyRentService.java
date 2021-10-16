@@ -45,24 +45,26 @@ public class JeonseMonthlyRentService {
 
                     Element element = (Element) node;
 
-                    String year = getTagValue("년", element);
-                    String courtBuilding = getTagValue("법정동", element);
-                    String guaranteeAmount = getTagValue("보증금액", element);
-                    String apartment = getTagValue("아파트", element);
-                    String monthly = getTagValue("월", element);
-                    String dedicatedArea = getTagValue("전용면적", element);
-                    String number = getTagValue("지번", element);
-                    String layer = getTagValue("층", element);
+                    String dealYear = getTagValue("년", element);
+                    String dong = getTagValue("법정동", element);
+                    String deposit = getTagValue("보증금액", element);
+                    String apartmentName = getTagValue("아파트", element);
+                    String dealMonth = getTagValue("월", element);
+                    String areaExclusive = getTagValue("전용면적", element);
+                    String jibun = getTagValue("지번", element);
+                    String floor = getTagValue("층", element);
+                    String monthlyRent = getTagValue("월세금액", element);
 
                     return JeonseMonthlyRentDTO.Default.builder()
-                            .year(year)
-                            .courtBuilding(courtBuilding)
-                            .aguaranteeAmount(guaranteeAmount)
-                            .apartment(apartment)
-                            .monthly(monthly)
-                            .dedicatedArea(dedicatedArea)
-                            .number(number)
-                            .layer(layer)
+                            .dealYear(dealYear)
+                            .dong(dong)
+                            .deposit(deposit)
+                            .apartmentName(apartmentName)
+                            .dealMonth(dealMonth)
+                            .areaExclusive(areaExclusive)
+                            .jibun(jibun)
+                            .floor(floor)
+                            .monthlyRent(monthlyRent)
                             .build();
                 })
                 .collect(Collectors.toList());

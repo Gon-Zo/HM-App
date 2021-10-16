@@ -12,45 +12,51 @@ public class JeonseMonthlyRentDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Default {
-        private String year;
-        private String courtBuilding;
-        private String aguaranteeAmount;
-        private String apartment;
-        private String monthly;
-        private String dedicatedArea;
-        private String number;
-        private String layer;
 
-        public Integer getYear() {
-            return Integer.valueOf(year.trim());
+        private String dealYear;
+        private String dong;
+        private String deposit;
+        private String apartmentName;
+        private String dealMonth;
+        private String areaExclusive;
+        private String jibun;
+        private String floor;
+        private String monthlyRent;
+
+        public Integer getDealYear() {
+            return Integer.valueOf(dealYear.trim());
         }
 
-        public String getCourtBuilding() {
-            return courtBuilding.trim();
+        public String getDong() {
+            return dong.trim();
         }
 
-        public BigDecimal getAguaranteeAmount() {
-            return BigDecimal.valueOf(Integer.valueOf(aguaranteeAmount.trim().replaceAll(",", "")).longValue());
+        public BigDecimal getDeposit() {
+            return BigDecimal.valueOf(Integer.valueOf(deposit.trim().replaceAll(",", "")).longValue());
         }
 
-        public String getApartment() {
-            return apartment.trim();
+        public String getApartmentName() {
+            return apartmentName.trim();
         }
 
-        public Integer getMonthly() {
-            return Integer.valueOf(monthly.trim());
+        public Integer getDealMonth() {
+            return Integer.valueOf(dealMonth.trim());
         }
 
-        public Double getDedicatedArea() {
-            return Double.valueOf(dedicatedArea.trim());
+        public Double getAreaExclusive() {
+            return Double.valueOf(areaExclusive.trim());
         }
 
-        public String getNumber() {
-            return number.trim();
+        public String getJibun() {
+            return jibun.trim();
         }
 
-        public Integer getLayer() {
-            return Integer.valueOf(layer.trim());
+        public Integer getFloor() {
+            return Integer.valueOf(floor.trim());
+        }
+
+        public String getMonthlyRent() {
+            return monthlyRent;
         }
     }
 
