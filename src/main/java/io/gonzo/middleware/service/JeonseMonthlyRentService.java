@@ -30,7 +30,7 @@ public class JeonseMonthlyRentService {
                 .append("serviceKey=")
                 .append(key)
                 .append("&LAWD_CD=")
-                .append(dto.getRegionName())
+                .append(dto.getRegion())
                 .append("&DEAL_YMD=")
                 .append(dto.getDate());
 

@@ -38,7 +38,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    public List getNumberOfTransactionsByNationwide(TransactionsStoreDTO.Nationwide dto) {
+    public List getNumberOfTransactionsByNationwide(TransactionsDTO.NationwideStore dto) {
 
         List<AreaCodeDTO.IAreaCodeParents> parentsList = areaCodeService.getByParentsTypeAreaList();
 
@@ -54,7 +54,7 @@ public class NationalStatisticsService {
                 .stream()
                 .map(parents -> {
 
-                    TransactionsStoreDTO.Default transactionsStoreDTO = TransactionsStoreDTO.Default.builder()
+                    TransactionsDTO.Store transactionsStoreDTO = TransactionsDTO.Store.builder()
                             .startDate(startMonth)
                             .endDate(endMonth)
                             .apiCode(apiCode)
@@ -69,7 +69,7 @@ public class NationalStatisticsService {
 
     }
 
-    public List getNumberOfTransactions(TransactionsStoreDTO.Default dto, boolean isYear) {
+    public List getNumberOfTransactions(TransactionsDTO.Store dto, boolean isYear) {
 
         List<BaseStatisticsDTO> baseList = createByNumberOfTransactions(dto, isYear);
 
@@ -117,7 +117,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    private List<BaseStatisticsDTO> createByNumberOfTransactions(TransactionsStoreDTO.Default dto, boolean isYear) {
+    private List<BaseStatisticsDTO> createByNumberOfTransactions(TransactionsDTO.Store dto, boolean isYear) {
 
         try {
 

@@ -57,7 +57,7 @@ public class JeonseMonthlyRentDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Store {
-        private String regionName;
+        private String region;
 
         private String date;
     }
