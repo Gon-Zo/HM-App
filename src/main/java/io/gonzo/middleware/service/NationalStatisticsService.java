@@ -2,7 +2,6 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.enums.NationalStatisticTypes;
 import io.gonzo.middleware.web.dto.*;
-import io.gonzo.middleware.web.dto.base.BaseStatisticsDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -71,7 +70,7 @@ public class NationalStatisticsService {
 
     public List getNumberOfTransactions(TransactionsDTO.Store dto, boolean isYear) {
 
-        List<BaseStatisticsDTO> baseList = createByNumberOfTransactions(dto, isYear);
+        List<TransactionsDTO.Base> baseList = createByNumberOfTransactions(dto, isYear);
 
         if (CollectionUtils.isEmpty(baseList)) {
             return new ArrayList();
@@ -87,9 +86,9 @@ public class NationalStatisticsService {
 
     }
 
-    private List<TransactionsDTO.Default> createByDefaultDTO(List<BaseStatisticsDTO> baseList, boolean isYear) {
+    private List<TransactionsDTO.Default> createByDefaultDTO(List<TransactionsDTO.Base> baseList, boolean isYear) {
 
-        BaseStatisticsDTO baseStatisticsDTO = baseList.get(0);
+        TransactionsDTO.Base baseStatisticsDTO = baseList.get(0);
 
         String regionNm = baseStatisticsDTO.getRegionNm();
 
@@ -117,7 +116,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    private List<BaseStatisticsDTO> createByNumberOfTransactions(TransactionsDTO.Store dto, boolean isYear) {
+    private List<TransactionsDTO.Base> createByNumberOfTransactions(TransactionsDTO.Store dto, boolean isYear) {
 
         try {
 
@@ -158,8 +157,7 @@ public class NationalStatisticsService {
 
                         String regionNm = getTagValue("regionNm", eElement);
 
-                        return BaseStatisticsDTO
-                                .builder()
+                        return TransactionsDTO.Base.builder()
                                 .regionCd(regionCd)
                                 .regionNm(regionNm)
                                 .rsRow(rsRow)

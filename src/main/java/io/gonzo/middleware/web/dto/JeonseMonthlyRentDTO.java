@@ -1,6 +1,8 @@
 package io.gonzo.middleware.web.dto;
 
+import com.sun.istack.NotNull;
 import lombok.*;
+
 
 import java.math.BigDecimal;
 
@@ -28,7 +30,7 @@ public class JeonseMonthlyRentDTO {
         }
 
         public BigDecimal getAguaranteeAmount() {
-            return BigDecimal.valueOf(Integer.valueOf(aguaranteeAmount.trim().replaceAll("," , "")).longValue());
+            return BigDecimal.valueOf(Integer.valueOf(aguaranteeAmount.trim().replaceAll(",", "")).longValue());
         }
 
         public String getApartment() {
@@ -57,9 +59,13 @@ public class JeonseMonthlyRentDTO {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Store {
+
+        @NotNull
         private String region;
 
+        @NotNull
         private String date;
+
     }
 
 }

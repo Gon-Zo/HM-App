@@ -23,6 +23,18 @@ public class TransactionsDTO {
     }
 
     @Getter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Base {
+        private String regionCd;
+
+        private String regionNm;
+
+        private String rsRow;
+    }
+
+    @Getter
     @SuperBuilder
     public static class BaseStore {
         private String startDate;
