@@ -56,7 +56,7 @@ public class JeonseMonthlyRentDTO {
         }
 
         public String getMonthlyRent() {
-            return monthlyRent;
+            return monthlyRent.trim();
         }
     }
 
