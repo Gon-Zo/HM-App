@@ -2,6 +2,7 @@ package io.gonzo.middleware.web;
 
 import io.gonzo.middleware.service.NationalStatisticsService;
 import io.gonzo.middleware.web.dto.TransactionsDTO;
+import io.gonzo.middleware.web.dto.TransactionsStoreDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +26,7 @@ public class NationalStatisticsResource {
      * @return
      */
     @GetMapping("/nationwide/number-transactions")
-    public List showTransactionsByNationwide(TransactionsDTO.NationwideStore dto) {
+    public List showTransactionsByNationwide(TransactionsStoreDTO.Nationwide dto) {
         return service.getNumberOfTransactionsByNationwide(dto);
     }
 
@@ -33,10 +34,10 @@ public class NationalStatisticsResource {
      * 지역별 부동산 거래 건수
      *
      * @param dto
-     * @return
+     * @returgt
      */
     @GetMapping("/number-transactions")
-    public List showTransactions(TransactionsDTO.Store dto) {
+    public List showTransactions(TransactionsStoreDTO.Default dto) {
         return service.getNumberOfTransactions(dto, setYearYn(dto.getApiCode().name()));
     }
 
