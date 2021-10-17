@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static io.gonzo.middleware.utils.ApiServerUtils.getByPublicApiItems;
-import static io.gonzo.middleware.utils.ApiServerUtils.getTagValue;
+import static io.gonzo.middleware.utils.ApiUtils.getByPublicApiItems;
+import static io.gonzo.middleware.utils.ApiUtils.getTagValue;
 
 @Service
 public class JeonseMonthlyRentService {

@@ -1,13 +1,20 @@
 package io.gonzo.middleware.web.dto;
 
-import io.gonzo.middleware.enums.NationalStatisticTypes;
-import io.gonzo.middleware.enums.TransactionTypeCodes;
+import io.gonzo.middleware.utils.ApiUtils;
 import io.gonzo.middleware.web.dto.base.BaseTransactionsStoreDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class TransactionsStoreDTO {
 
@@ -16,21 +23,21 @@ public class TransactionsStoreDTO {
     @SuperBuilder
     @NoArgsConstructor
     public static class Default extends BaseTransactionsStoreDTO {
+
         private String region;
 
-        public Default(String startDate, String endDate, @NonNull NationalStatisticTypes apiCode, @NonNull TransactionTypeCodes typeCode, String region) {
-            super(startDate, endDate, apiCode, typeCode);
-            this.region = region;
+        private Long trending;
+
+        @Override
+        public String getStartDate() {
+
+            if (ObjectUtils.isEmpty(this.trending)) {
+                return super.getStartDate();
+            }
+
+            return ApiUtils.createByTrendingDate(super.getStartDate(), trending);
         }
 
-        public Default(String region) {
-            this.region = region;
-        }
-
-        public Default(BaseTransactionsStoreDTOBuilder<?, ?> b, String region) {
-            super(b);
-            this.region = region;
-        }
     }
 
     @Getter

@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static io.gonzo.middleware.utils.ApiServerUtils.*;
+import static io.gonzo.middleware.utils.ApiUtils.*;
 
 @Slf4j
 @Service

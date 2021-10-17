@@ -1,7 +1,6 @@
 package io.gonzo.middleware.web;
 
 import io.gonzo.middleware.service.NationalStatisticsService;
-import io.gonzo.middleware.web.dto.TransactionsDTO;
 import io.gonzo.middleware.web.dto.TransactionsStoreDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static io.gonzo.middleware.utils.ApiServerUtils.setYearYn;
+import static io.gonzo.middleware.utils.ApiUtils.setYearYn;
 
 @RestController
 @RequiredArgsConstructor

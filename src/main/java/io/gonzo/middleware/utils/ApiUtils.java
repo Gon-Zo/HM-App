@@ -8,9 +8,13 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
-public class ApiServerUtils {
+public class ApiUtils {
 
     public static boolean setYearYn(String codeName) {
         return codeName.contains("Year");
@@ -71,6 +75,25 @@ public class ApiServerUtils {
             e.printStackTrace();
         } finally {
             return nodeList;
+        }
+    }
+
+    public static String createByTrendingDate(String dateStr, Long trendingNum) {
+        String trendingDateStr = null;
+        try {
+
+            SimpleDateFormat dateParser = new SimpleDateFormat("yyyyMM");
+
+            trendingDateStr = dateParser.parse(dateStr)
+                    .toInstant()
+                    .atZone(ZoneId.systemDefault())
+                    .toLocalDate()
+                    .minusMonths(trendingNum).format(DateTimeFormatter.ofPattern("yyyyMM"));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } finally {
+            return trendingDateStr;
         }
     }
 
