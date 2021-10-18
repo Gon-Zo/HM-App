@@ -35,7 +35,7 @@ public class TransactionsStoreDTO {
                 return super.getStartDate();
             }
 
-            return ApiUtils.createByTrendingDate(super.getStartDate(), trending);
+            return ApiUtils.createByTrendingDate(super.getEndDate(), trending);
         }
 
     }
