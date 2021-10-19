@@ -1,6 +1,7 @@
 package io.gonzo.middleware.utils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -14,6 +15,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
 @Slf4j
+@Component
 public class ApiUtils {
 
     public static boolean setYearYn(String codeName) {
@@ -21,11 +23,31 @@ public class ApiUtils {
     }
 
     public static String getTagValue(String tag, Element eElement) {
-        NodeList nlList = eElement.getElementsByTagName(tag).item(0).getChildNodes();
-        Node nValue = (Node) nlList.item(0);
-        if (nValue == null)
-            return null;
-        return nValue.getNodeValue();
+        try {
+
+            NodeList tagNodeList = eElement.getElementsByTagName(tag);
+
+            if (tagNodeList.getLength() == 0) {
+                return null;
+            }
+
+            NodeList nlList = tagNodeList.item(0).getChildNodes();
+
+            if (nlList.getLength() == 0) {
+                return null;
+            }
+
+            Node nValue = (Node) nlList.item(0);
+
+            if (nValue == null)
+                return null;
+
+            return nValue.getNodeValue().trim();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     public static void resultCodeByException(Document doc) {

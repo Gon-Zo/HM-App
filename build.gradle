@@ -41,6 +41,8 @@ dependencies {
 
     implementation 'org.apache.commons:commons-lang3:3.9'
 
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
 }
 
 test {
