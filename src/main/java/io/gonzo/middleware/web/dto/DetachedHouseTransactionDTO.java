@@ -1,6 +1,6 @@
 package io.gonzo.middleware.web.dto;
 
-import com.sun.istack.NotNull;
+import io.gonzo.middleware.utils.ApiUtils;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -26,15 +26,15 @@ public class DetachedHouseTransactionDTO {
         private String cancelDealDay;
 
         public Integer getDealAmount() {
-            return Integer.valueOf(dealAmount.replaceAll(",", ""));
+            return ApiUtils.integerOf(dealAmount);
         }
 
         public BigDecimal getPlottage() {
-            return BigDecimal.valueOf(Double.valueOf(plottage));
+            return ApiUtils.valueOf(plottage);
         }
 
         public BigDecimal getTotalFloorArea() {
-            return BigDecimal.valueOf(Double.valueOf(totalFloorArea));
+            return ApiUtils.valueOf(totalFloorArea);
         }
 
     }

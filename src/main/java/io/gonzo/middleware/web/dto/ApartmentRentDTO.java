@@ -1,6 +1,7 @@
 package io.gonzo.middleware.web.dto;
 
 import com.sun.istack.NotNull;
+import io.gonzo.middleware.utils.ApiUtils;
 import lombok.*;
 
 
@@ -24,11 +25,11 @@ public class ApartmentRentDTO {
         private String monthlyRent;
 
         public Integer getDealYear() {
-            return Integer.valueOf(dealYear);
+            return ApiUtils.integerOf(dealYear);
         }
 
-        public BigDecimal getDeposit() {
-            return BigDecimal.valueOf(Integer.valueOf(deposit.replaceAll(",", "")).longValue());
+        public Integer getDeposit() {
+            return ApiUtils.integerOf(deposit);
         }
 
         public Integer getDealMonth() {
