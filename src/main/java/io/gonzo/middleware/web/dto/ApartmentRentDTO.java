@@ -24,39 +24,23 @@ public class ApartmentRentDTO {
         private String monthlyRent;
 
         public Integer getDealYear() {
-            return Integer.valueOf(dealYear.trim());
-        }
-
-        public String getDong() {
-            return dong.trim();
+            return Integer.valueOf(dealYear);
         }
 
         public BigDecimal getDeposit() {
-            return BigDecimal.valueOf(Integer.valueOf(deposit.trim().replaceAll(",", "")).longValue());
-        }
-
-        public String getApartmentName() {
-            return apartmentName.trim();
+            return BigDecimal.valueOf(Integer.valueOf(deposit.replaceAll(",", "")).longValue());
         }
 
         public Integer getDealMonth() {
-            return Integer.valueOf(dealMonth.trim());
+            return Integer.valueOf(dealMonth);
         }
 
         public Double getAreaExclusive() {
-            return Double.valueOf(areaExclusive.trim());
-        }
-
-        public String getJibun() {
-            return jibun.trim();
+            return Double.valueOf(areaExclusive);
         }
 
         public Integer getFloor() {
             return Integer.valueOf(floor.trim());
-        }
-
-        public String getMonthlyRent() {
-            return monthlyRent.trim();
         }
     }
 
