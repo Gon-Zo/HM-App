@@ -2,6 +2,7 @@ package io.gonzo.middleware.web;
 
 import io.gonzo.middleware.service.DetachedHouseTransactionService;
 import io.gonzo.middleware.web.dto.DetachedHouseTransactionDTO;
+import io.gonzo.middleware.web.dto.StoreDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +21,8 @@ public class DetachedHouseTransactionResource {
     private final DetachedHouseTransactionService service;
 
     @GetMapping("")
-    public List<DetachedHouseTransactionDTO.Default> showByDetachedHouseTransaction() {
-        return service.getByDetachedHouseTransaction();
+    public List<DetachedHouseTransactionDTO.Default> showByDetachedHouseTransaction(StoreDTO.Base dto) {
+        return service.getByDetachedHouseTransaction(dto);
     }
 
 }

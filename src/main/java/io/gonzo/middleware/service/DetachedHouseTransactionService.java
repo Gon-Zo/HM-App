@@ -2,6 +2,7 @@ package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.utils.ApiUtils;
 import io.gonzo.middleware.web.dto.DetachedHouseTransactionDTO;
+import io.gonzo.middleware.web.dto.StoreDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Element;
@@ -19,7 +20,7 @@ public class DetachedHouseTransactionService {
     @Value("${app.key}")
     private String key;
 
-    public List<DetachedHouseTransactionDTO.Default> getByDetachedHouseTransaction() {
+    public List<DetachedHouseTransactionDTO.Default> getByDetachedHouseTransaction(StoreDTO.Base dto) {
 
         String uri = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcSHTrade?";
 
@@ -29,9 +30,9 @@ public class DetachedHouseTransactionService {
                 .append("serviceKey=")
                 .append(key)
                 .append("&LAWD_CD=")
-                .append("11110")
+                .append(dto.getRegion())
                 .append("&DEAL_YMD=")
-                .append("201512");
+                .append(dto.getDate());
 
         NodeList nodeList = ApiUtils.getByPublicApiItems(sb.toString());
 

@@ -44,18 +44,4 @@ public class ApartmentRentDTO {
         }
     }
 
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Store {
-
-        @NotNull
-        private String region;
-
-        @NotNull
-        private String date;
-
-    }
-
 }

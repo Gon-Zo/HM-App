@@ -1,6 +1,7 @@
 package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.web.dto.ApartmentRentDTO;
+import io.gonzo.middleware.web.dto.StoreDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Element;
@@ -20,7 +21,7 @@ public class ApartmentRentService {
     @Value("${app.key}")
     private String key;
 
-    public List<ApartmentRentDTO.Default> getByApartmentRent(ApartmentRentDTO.Store dto) {
+    public List<ApartmentRentDTO.Default> getByApartmentRent(StoreDTO.Base dto) {
 
         String uri = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?";
 

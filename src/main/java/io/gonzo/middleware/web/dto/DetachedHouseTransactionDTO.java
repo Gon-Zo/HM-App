@@ -1,9 +1,7 @@
 package io.gonzo.middleware.web.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.sun.istack.NotNull;
+import lombok.*;
 
 import java.math.BigDecimal;
 
