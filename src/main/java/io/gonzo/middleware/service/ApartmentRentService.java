@@ -1,6 +1,6 @@
 package io.gonzo.middleware.service;
 
-import io.gonzo.middleware.web.dto.JeonseMonthlyRentDTO;
+import io.gonzo.middleware.web.dto.ApartmentRentDTO;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Element;
@@ -15,12 +15,12 @@ import static io.gonzo.middleware.utils.ApiUtils.getByPublicApiItems;
 import static io.gonzo.middleware.utils.ApiUtils.getTagValue;
 
 @Service
-public class JeonseMonthlyRentService {
+public class ApartmentRentService {
 
     @Value("${app.key}")
     private String key;
 
-    public List<JeonseMonthlyRentDTO.Default> getByJenoseMounthlyRent(JeonseMonthlyRentDTO.Store dto) {
+    public List<ApartmentRentDTO.Default> getByApartmentRent(ApartmentRentDTO.Store dto) {
 
         String uri = "http://openapi.molit.go.kr:8081/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptRent?";
 
@@ -55,7 +55,7 @@ public class JeonseMonthlyRentService {
                     String floor = getTagValue("층", element);
                     String monthlyRent = getTagValue("월세금액", element);
 
-                    return JeonseMonthlyRentDTO.Default.builder()
+                    return ApartmentRentDTO.Default.builder()
                             .dealYear(dealYear)
                             .dong(dong)
                             .deposit(deposit)
@@ -70,6 +70,5 @@ public class JeonseMonthlyRentService {
                 .collect(Collectors.toList());
 
     }
-
 
 }

@@ -6,7 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-public class JeonseMonthlyRentDTO {
+public class ApartmentRentDTO {
 
     @Builder
     @NoArgsConstructor
