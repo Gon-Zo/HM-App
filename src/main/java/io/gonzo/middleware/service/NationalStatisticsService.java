@@ -37,7 +37,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    public List getNumberOfTransactionsByNationwide(TransactionsStoreDTO.Nationwide dto) {
+    public List getNumberOfTransactionsByNationwide(TransactionsDTO.NationwideStore dto) {
 
         List<AreaCodeDTO.IAreaCodeParents> parentsList = areaCodeService.getByParentsTypeAreaList();
 
@@ -51,24 +51,18 @@ public class NationalStatisticsService {
 
         return (List) parentsList
                 .stream()
-                .map(parents -> {
-
-                    TransactionsStoreDTO.Default transactionsStoreDTO = TransactionsStoreDTO.Default.builder()
-                            .startDate(startMonth)
-                            .endDate(endMonth)
-                            .apiCode(apiCode)
-                            .region(parents.getCode())
-                            .typeCode(dto.getTypeCode())
-                            .build();
-
-                    return getNumberOfTransactions(transactionsStoreDTO, isYear);
-                })
+                .map(parents -> getNumberOfTransactions(TransactionsDTO.DefaultStore.builder()
+                        .startDate(startMonth)
+                        .endDate(endMonth)
+                        .apiCode(apiCode)
+                        .region(parents.getCode())
+                        .typeCode(dto.getTypeCode())
+                        .build(), isYear))
                 .flatMap(Collection::parallelStream)
                 .collect(Collectors.toList());
-
     }
 
-    public List getNumberOfTransactions(TransactionsStoreDTO.Default dto, boolean isYear) {
+    public List getNumberOfTransactions(TransactionsDTO.DefaultStore dto, boolean isYear) {
 
         List<TransactionsDTO.Base> baseList = createByNumberOfTransactions(dto, isYear);
 
@@ -116,7 +110,7 @@ public class NationalStatisticsService {
      * @param dto
      * @return
      */
-    private List<TransactionsDTO.Base> createByNumberOfTransactions(TransactionsStoreDTO.Default dto, boolean isYear) {
+    private List<TransactionsDTO.Base> createByNumberOfTransactions(TransactionsDTO.DefaultStore dto, boolean isYear) {
 
         try {
 
