@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 단독/다가구 매매 실거래 자료
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/detached-house-transaction")

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * 아파트 전월세
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/apartment-rent")

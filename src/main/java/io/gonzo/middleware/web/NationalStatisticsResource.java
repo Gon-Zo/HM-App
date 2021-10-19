@@ -11,6 +11,9 @@ import java.util.List;
 
 import static io.gonzo.middleware.utils.ApiUtils.setYearYn;
 
+/**
+ * 부동산 거래 통계 조회 서비스
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/national-statistics")
