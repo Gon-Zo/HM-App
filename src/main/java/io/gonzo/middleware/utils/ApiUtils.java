@@ -9,6 +9,7 @@ import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
@@ -118,5 +119,14 @@ public class ApiUtils {
             return trendingDateStr;
         }
     }
+
+    public static BigDecimal valueOf(String str) {
+        return BigDecimal.valueOf(Double.valueOf(str));
+    }
+
+    public static Integer integerOf(String str) {
+        return Integer.valueOf(str.replaceAll(",", ""));
+    }
+
 
 }
