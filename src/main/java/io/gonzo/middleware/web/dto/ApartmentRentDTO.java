@@ -1,11 +1,8 @@
 package io.gonzo.middleware.web.dto;
 
-import com.sun.istack.NotNull;
 import io.gonzo.middleware.utils.ApiUtils;
 import lombok.*;
 
-
-import java.math.BigDecimal;
 
 public class ApartmentRentDTO {
 
@@ -41,8 +38,9 @@ public class ApartmentRentDTO {
         }
 
         public Integer getFloor() {
-            return Integer.valueOf(floor.trim());
+            return Integer.valueOf(floor);
         }
+        
     }
 
 }
