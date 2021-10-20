@@ -40,7 +40,7 @@ public class ApartmentRentDTO {
         public Integer getFloor() {
             return Integer.valueOf(floor);
         }
-        
+
     }
 
 }
