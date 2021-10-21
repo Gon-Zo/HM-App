@@ -6,6 +6,7 @@ import lombok.*;
 
 public class ApartmentRentDTO {
 
+    @Getter
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
