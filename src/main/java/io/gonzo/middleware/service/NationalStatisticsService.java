@@ -12,14 +12,12 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static io.gonzo.middleware.utils.ApiUtils.*;
+import static jdk.nashorn.internal.objects.NativeDebug.map;
 
 @Slf4j
 @Service
@@ -74,10 +72,40 @@ public class NationalStatisticsService {
             case RealEstateTradingCount: {
                 return createByDefaultDTO(baseList, isYear);
             }
+            case RealEstateTradingCountDealer: {
+                return createByRealEstateTradingCountDealer(baseList);
+            }
             default:
                 return baseList;
         }
 
+    }
+
+    private List<TransactionsDTO.RETCD> createByRealEstateTradingCountDealer(List<TransactionsDTO.Base> baseList) {
+
+        TransactionsDTO.Base baseStatisticsDTO = baseList.get(0);
+
+        return Arrays.stream(baseStatisticsDTO.getRsRow().split("\\|"))
+                .map(item -> {
+
+                    String[] itemArray = item.split(",");
+
+                    return TransactionsDTO.RETCD.builder()
+                            .month(Integer.valueOf(itemArray[0]))
+                            .total(Integer.valueOf(itemArray[1]))
+                            .a(Integer.valueOf(itemArray[2]))
+                            .b(Integer.valueOf(itemArray[3]))
+                            .c(Integer.valueOf(itemArray[4]))
+                            .d(Integer.valueOf(itemArray[5]))
+                            .e(Integer.valueOf(itemArray[6]))
+                            .f(Integer.valueOf(itemArray[7]))
+                            .g(Integer.valueOf(itemArray[8]))
+                            .h(Integer.valueOf(itemArray[9]))
+                            .i(Integer.valueOf(itemArray[10]))
+                            .build();
+
+                })
+                .collect(Collectors.toList());
     }
 
     private List<TransactionsDTO.Default> createByDefaultDTO(List<TransactionsDTO.Base> baseList, boolean isYear) {

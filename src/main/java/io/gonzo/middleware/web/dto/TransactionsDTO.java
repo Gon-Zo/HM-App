@@ -14,6 +14,28 @@ public class TransactionsDTO {
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
+    //RealEstateTradingCountDealer
+    public static class RETCD {
+
+        private Integer month;
+        private Integer total;
+        private Integer a;
+        private Integer b;
+        private Integer c;
+        private Integer d;
+        private Integer e;
+        private Integer f;
+        private Integer g;
+        private Integer h;
+        private Integer i;
+
+    }
+
+    @Getter
+    @Setter
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class Default {
 
         private String regionName;
@@ -59,7 +81,7 @@ public class TransactionsDTO {
     @Setter
     @SuperBuilder
     @NoArgsConstructor
-    public static class DefaultStore extends BaseStore{
+    public static class DefaultStore extends BaseStore {
         private String region;
 
         private Long trending;
@@ -79,7 +101,7 @@ public class TransactionsDTO {
     @Setter
     @SuperBuilder
     @NoArgsConstructor
-    public static class NationwideStore extends BaseStore{
+    public static class NationwideStore extends BaseStore {
     }
 
 }
