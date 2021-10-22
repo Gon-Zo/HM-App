@@ -128,4 +128,13 @@ public class ApiUtils {
         return Integer.valueOf(str.replaceAll(",", ""));
     }
 
+    public static String yearMonthOf(String str) {
+
+        String year = str.substring(0, 4);
+
+        String month = str.substring(4, 6);
+
+        return String.format("%s-%s", year, month);
+    }
+
 }

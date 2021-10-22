@@ -17,7 +17,7 @@ public class TransactionsDTO {
     //RealEstateTradingCountDealer
     public static class RETCD {
 
-        private Integer month;
+        private String month;
         private Integer total;
         private Integer a;
         private Integer b;

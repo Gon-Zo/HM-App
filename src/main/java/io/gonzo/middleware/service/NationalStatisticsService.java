@@ -1,6 +1,7 @@
 package io.gonzo.middleware.service;
 
 import io.gonzo.middleware.enums.NationalStatisticTypes;
+import io.gonzo.middleware.utils.ApiUtils;
 import io.gonzo.middleware.web.dto.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,7 +92,7 @@ public class NationalStatisticsService {
                     String[] itemArray = item.split(",");
 
                     return TransactionsDTO.RETCD.builder()
-                            .month(Integer.valueOf(itemArray[0]))
+                            .month(ApiUtils.yearMonthOf(itemArray[0]))
                             .total(Integer.valueOf(itemArray[1]))
                             .a(Integer.valueOf(itemArray[2]))
                             .b(Integer.valueOf(itemArray[3]))
